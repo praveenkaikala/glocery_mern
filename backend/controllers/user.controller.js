@@ -145,4 +145,33 @@ export const loginController = async (req,res) => {
 };
 
 
+export const logiOutController = async (req,res) => {
+  try {
+    const cokkieOptions={
+        httpOnly:true,
+        secure:true,
+        sameSite:"none"
+    }
+    res.clearCookie("accesstoken",cokkieOptions)
+    res.clearCookie("refreshtoken",cokkieOptions)
+    console.log(req.userId);
+    
+    await userModel.findByIdAndUpdate(req.userId,{
+        refreshToken:""
+    })
+    return res.status(200).send({
+        message:"logout success",
+        error:false,
+        success:true
+    })
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+};
+
 
