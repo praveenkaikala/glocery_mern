@@ -1,6 +1,7 @@
 import userModel from "../models/user.model.js";
 import { sendEmail } from "../utils/email.js";
 import bcryptjs from "bcryptjs"
+import { genarateAccessToken, genarateRefreshToken } from "../utils/genarateToken.js";
 export const registerUserController = async (req,res) => {
   try {
     const {name,email,password}=req.body;
@@ -38,10 +39,12 @@ export const registerUserController = async (req,res) => {
         success:true
     })
   } catch (error) {
-    res.status(500).send({'message':error.message || error,
-        success:false
-    })
     console.error(error);
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
   }
 };
 
@@ -67,5 +70,79 @@ export  const verifyEmailController = async (req,res) => {
     })
   } catch (error) {
     console.error(error);
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
   }
 };
+
+
+export const loginController = async (req,res) => {
+  try {
+    const {email,password}=req.body;
+    if(!email || !password)
+    {
+        return res.status(400).send({
+            message:"email,password required",
+            success:false,
+            error:true
+        })
+    }
+    const user =await userModel.findOne({email});
+    if(!user)
+    {
+        return res.status(404).send({
+            success:false,
+            error:true,
+            message:"user not found"
+        })
+    }
+    if(user.status!="active")
+    {
+        return res.status(400).send({
+            success:false,
+            error:true,
+            message:"account inactive"
+        })
+    }
+    const check=await bcryptjs.compare(password,user.password)
+    if(!check)
+    {
+        return res.status(400).send({
+            success:false,
+            error:true,
+            message:"password invalid"
+        })
+    }
+
+    const accessToken=await genarateAccessToken(user._id);
+    const refreshToken=await genarateRefreshToken(user._id)
+    const cokkieOptions={
+        httpOnly:true,
+        secure:true,
+        sameSite:"none"
+    }
+    res.cookie('accesstoken',accessToken,cokkieOptions)
+    res.cookie('refreshtoken',refreshToken,cokkieOptions)
+    return res.status(200).send({
+        success:true,
+        error:false,
+        message:"login success",
+        data:{
+            accessToken,refreshToken
+        }
+    })
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+};
+
+
+
