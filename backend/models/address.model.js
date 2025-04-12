@@ -22,6 +22,10 @@ const addressSchema=mongoose.Schema({
     },
     mobile:{
         type:Number,
+    },
+    statue:{
+        type:Boolean,
+        default:true
     }
 },{
     timestamps:true
