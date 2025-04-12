@@ -2,7 +2,8 @@ const express=require('express');
 const app=express();
 const cors=require("cors");
 const helmet=require('helmet')
-const cookieparser=require("cookie-parser")
+const cookieparser=require("cookie-parser");
+const { connectDatabase } = require('./utils/connectDB');
 require("dotenv").config()
 app.use(cors({
     credentials:true,
@@ -15,6 +16,9 @@ app.get("/",(req,res)=>{
 app.use(helmet({
     crossOriginResourcePolicy:false
 }))
+
+
+connectDatabase()
 app.listen(5000,()=>{
     console.log("app is running on 5000");
 })
