@@ -1,18 +1,21 @@
-const express=require('express');
+import express from "express"
 const app=express();
-const cors=require("cors");
-const helmet=require('helmet')
-const cookieparser=require("cookie-parser");
-const { connectDatabase } = require('./utils/connectDB');
-require("dotenv").config()
+import cors from "cors"
+import helmet from "helmet"
+import dotenv from "dotenv"
+dotenv.config()
+
+import userRouter from "./routes/user.routes.js"
+import { connectDatabase } from "./utils/connectDB.js";
 app.use(cors({
     credentials:true,
     origin:process.env.FRONTEND_URL
 }))
-app.use(cookieparser())
+app.use(express.json())
 app.get("/",(req,res)=>{
     res.send("hello user");
 })
+app.use("/api/user",userRouter)
 app.use(helmet({
     crossOriginResourcePolicy:false
 }))

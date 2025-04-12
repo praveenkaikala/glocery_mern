@@ -1,8 +1,8 @@
-const mongoose=require("mongoose")
-const dotenv=require("dotenv")
+import mongoose from "mongoose"
+import dotenv from "dotenv"
 dotenv.config()
 
- const connectDatabase =()=>{
+ export const connectDatabase =()=>{
     mongoose.connect(process.env.MONGO_URI,{
         dbName:"glocery"
     }).then(()=>{
@@ -11,4 +11,3 @@ dotenv.config()
         console.log(err)
     })
 }
-module.exports={connectDatabase}
