@@ -48,7 +48,7 @@ const userSchema=mongoose.Schema({
     shopping_cart:[
         {
             type:mongoose.Schema.ObjectId,
-            ref:"cartProduct"
+            ref:"cart"
         }
     ],
     address_details:[
