@@ -2,6 +2,7 @@ import userModel from "../models/user.model.js";
 import { sendEmail } from "../utils/email.js";
 import bcryptjs from "bcryptjs"
 import { genarateAccessToken, genarateRefreshToken } from "../utils/genarateToken.js";
+import { uploadImage } from "../utils/uploadImage.js";
 export const registerUserController = async (req,res) => {
   try {
     const {name,email,password}=req.body;
@@ -176,7 +177,22 @@ export const logiOutController = async (req,res) => {
 
 export const uploadAvtar = async (req,res) => {
   try {
-    
+    const userId=req.userId
+    const image=req.file
+    const upload=await uploadImage(image)
+    const update=await userModel.findByIdAndUpdate(userId,{
+        avatar:upload.url
+    })
+
+    return res.status(200).send({
+        success:false,
+        error:true,
+        message:"upload success",
+        data:{
+            _id:userId,
+            url:upload.url
+        }
+    })
   } catch (error) {
     console.error(error);
     return res.status(500).send({
