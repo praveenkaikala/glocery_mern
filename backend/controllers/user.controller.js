@@ -185,13 +185,48 @@ export const uploadAvtar = async (req,res) => {
     })
 
     return res.status(200).send({
-        success:false,
-        error:true,
+        success:true,
+        error:false,
         message:"upload success",
         data:{
             _id:userId,
             url:upload.url
         }
+    })
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+};
+
+
+export const updateDetailsController = async (req,res) => {
+  try {
+    const {name,email,mobile,password}=req.body
+    let hashpass=""
+    if(password)
+    {
+        const salt=await bcryptjs.genSalt(10);
+        hashpass=await bcryptjs.hash(password,salt) 
+    }
+    const updateUser=await userModel.findByIdAndUpdate(req.userId,{
+        ...(name && {name:name}),
+        ...(email && {email:email}),
+        ...(mobile && {mobile:mobile}),
+        ...(password && {password:hashpass}),
+
+    },{
+        new:true
+    })
+    return res.status(200).send({
+        success:true,
+        error:false,
+        message:"update success",
+        data:updateUser
     })
   } catch (error) {
     console.error(error);
