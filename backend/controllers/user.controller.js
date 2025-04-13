@@ -174,4 +174,15 @@ export const logiOutController = async (req,res) => {
   }
 };
 
-
+export const uploadAvtar = async (req,res) => {
+  try {
+    
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+};
