@@ -1,8 +1,9 @@
 import userModel from "../models/user.model.js";
-import { sendEmail } from "../utils/email.js";
+import { sendEmail, sentOtp } from "../utils/email.js";
 import bcryptjs from "bcryptjs"
 import { genarateAccessToken, genarateRefreshToken } from "../utils/genarateToken.js";
 import { uploadImage } from "../utils/uploadImage.js";
+import { genarateOtp } from "../utils/genarateOtp.js";
 export const registerUserController = async (req,res) => {
   try {
     const {name,email,password}=req.body;
@@ -237,3 +238,41 @@ export const updateDetailsController = async (req,res) => {
     })
   }
 };
+
+
+export const forgotPasswordController = async (req,res) => {
+  try {
+    const {email} =req.body;
+
+    const user=await userModel.findOne({email});
+    if(!user)
+    {
+        return res.status(400).send({
+            message:"invalid email",
+            error:true,
+            success:false
+        })
+    }
+
+    const otp=genarateOtp()
+    const expireTime=new Date()+60*60*1000
+
+    const update=await userModel.findByIdAndUpdate(user._id,{
+        forgot_password_otp:otp,
+        forgot_password_expiry:new Date(expireTime).toISOString()
+    })
+     await sentOtp(user.name,email,otp)
+    return res.status(200).send({
+        message:"otp sent to email",
+        error:false,
+        success:true,
+    })
+  } catch (error) {
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+};
+

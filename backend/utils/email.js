@@ -104,3 +104,89 @@ export const sendEmail = async (email, name,verificationLink) => {
     throw new Error("Email send unsuccessful");
   }
 };
+
+
+export const sentOtp = async (userName,email,otp) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      }
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Forgot Password From Blinkit',
+      html: `
+       <!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f7f7;
+      padding: 20px;
+    }
+    .email-container {
+      background-color: #fff;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: auto;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .header {
+      text-align: center;
+      font-size: 24px;
+      color: #00b300;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .otp-box {
+      background-color: #f0f0f0;
+      padding: 20px;
+      font-size: 32px;
+      font-weight: bold;
+      letter-spacing: 6px;
+      text-align: center;
+      border-radius: 8px;
+      color: #333;
+    }
+    .footer {
+      margin-top: 25px;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="header">Your Blinkit OTP</div>
+    <p>Hi <strong>${userName}</strong>,</p>
+    <p>Your One-Time Password (OTP) for verification is:</p>
+    <div class="otp-box">${otp}</div>
+    <p>This OTP is valid for the next 1 hour. Please do not share it with anyone.</p>
+    <div class="footer">
+      Thank you for choosing Blinkit!<br>
+      — Team Blinkit
+    </div>
+  </div>
+</body>
+</html>
+
+      `
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully');
+  } catch (error) {
+    console.error(error);
+  }
+};
