@@ -328,3 +328,46 @@ export const verifyOtpController = async (req,res) => {
     })
   }
 };
+
+
+export const resetPassword = async (req,res) => {
+  try {
+    const {email,newPassword}=req.body;
+    if(!newPassword || !email)
+        {
+            return res.status(400).send({
+                message:"provide email,password",
+                error:true,
+                success:false
+            })
+        }
+    const user=await userModel.findOne({email});
+    if(!user)
+    {
+        return res.status(400).send({
+            message:"invalid email",
+            error:true,
+            success:false
+        })
+    }
+    const salt=await bcryptjs.genSalt(10);
+    const hashpass=await bcryptjs.hash(newPassword,salt) 
+    const update=await userModel.findByIdAndUpdate(user._id,{
+        password:hashpass,
+        forgot_password_otp:null,
+        forgot_password_expiry:""
+
+    })
+    return res.status(200).send({
+        message:"password changed successfull",
+        error:false,
+        success:true
+    })
+  } catch (error) {
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+};
