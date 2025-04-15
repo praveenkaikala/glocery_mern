@@ -276,3 +276,55 @@ export const forgotPasswordController = async (req,res) => {
   }
 };
 
+export const verifyOtpController = async (req,res) => {
+  try {
+    const {email,otp}=req.body;
+    if(!otp || !email)
+        {
+            return res.status(400).send({
+                message:"provide otp,email",
+                error:true,
+                success:false
+            })
+        }
+    const user=await userModel.findOne({email});
+    if(!user)
+    {
+        return res.status(400).send({
+            message:"invalid email",
+            error:true,
+            success:false
+        })
+    }
+    const currTime=new Date().toISOString();
+    if(currTime > user.forgot_password_expiry)
+    {
+        return res.status(400).send({
+            message:"otp expire",
+            error:true,
+            success:false
+        })
+    }
+    
+    if(otp !== user.forgot_password_otp)
+    {
+        return res.status(400).send({
+            message:"otp invalid",
+            error:true,
+            success:false
+        })
+    }
+
+    return res.status(200).send({
+        message:"otp valid successfull",
+        error:false,
+        success:true
+    })
+  } catch (error) {
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+};
