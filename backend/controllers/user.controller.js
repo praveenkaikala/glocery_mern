@@ -4,6 +4,7 @@ import bcryptjs from "bcryptjs"
 import { genarateAccessToken, genarateRefreshToken } from "../utils/genarateToken.js";
 import { uploadImage } from "../utils/uploadImage.js";
 import { genarateOtp } from "../utils/genarateOtp.js";
+import jwt from "jsonwebtoken";
 export const registerUserController = async (req,res) => {
   try {
     const {name,email,password}=req.body;
@@ -360,6 +361,53 @@ export const resetPassword = async (req,res) => {
     })
     return res.status(200).send({
         message:"password changed successfull",
+        error:false,
+        success:true
+    })
+  } catch (error) {
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+};
+
+
+
+
+export const refreshToken = async (req,res) => {
+  try {
+    const refreshToken=req.cookies.refreshtoken || req.header.authorization.split()[1];
+    if(!refreshToken)
+    {
+        return res.status(400).send({
+            message:"unotherized access",
+            error:true,
+            success:false
+        })
+
+    }
+    const verifyToken=await jwt.verify(refreshToken,process.env.SECRET_KEY)
+    if(!verifyToken)
+    {
+        return res.status(401).send({
+            message:"token expire",
+            error:true,
+            success:false
+        })
+    }
+    console.log(verifyToken);
+    const userId=refreshToken?.id;
+    const accessToken=await genarateAccessToken(userId);
+    const cokkieOptions={
+        httpOnly:true,
+        secure:true,
+        sameSite:"none"
+    }
+    res.cookie('accesstoken',accessToken,cokkieOptions)
+    return res.status(200).send({
+        message:"new access token generated",
         error:false,
         success:true
     })
