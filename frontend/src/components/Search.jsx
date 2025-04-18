@@ -26,9 +26,9 @@ const Search = () => {
 
              <TypeAnimation className='w-full'
                sequence={[
-                 // Same substring at the start will only be typed out once, initially
+                 
                  "Search 'Milk'",
-                 1000, // wait 1s before replacing "Mice" with "Hamsters"
+                 1000,
                  "Search 'Sugar'",
                  1000,
                  "Search 'Chiken'",
