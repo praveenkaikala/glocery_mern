@@ -3,7 +3,10 @@ import logo from "../assets/logo.webp";
 import Search from "./Search";
 import { Link } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
+import useMobile from "../hooks/useMobile";
 const Header = () => {
+    const [isMobile]=useMobile();
+    console.log(isMobile)
   return (
     <header className="h-26 md:h-18 md:shadow-md sticky top-0 flex md:items-center justify-around md:flex-row flex-col md:justify-between">
       <div className="container mx-auto px-3 flex items-center justify-between">
