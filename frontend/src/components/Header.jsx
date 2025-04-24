@@ -4,6 +4,7 @@ import Search from "./Search";
 import { Link, useLocation } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import useMobile from "../hooks/useMobile";
+import { TiShoppingCart } from "react-icons/ti";
 const Header = () => {
   const [isMobile] = useMobile();
   const location = useLocation();
@@ -11,7 +12,7 @@ const Header = () => {
   console.log("is search page", isSearchpage);
   console.log("ismobile", isMobile);
   return (
-    <header className="h-26 md:h-18 md:shadow-md sticky top-0 flex md:items-center justify-around md:flex-row flex-col md:justify-between">
+    <header className="h-26 md:h-18 md:shadow-md sticky top-0 flex md:items-center justify-around md:flex-row flex-col md:justify-between bg-white">
       
       {/* mobile verison */}
       
@@ -47,8 +48,17 @@ const Header = () => {
 
           {/* login */}
 
-          <div className="hidden md:block">
-            <div>login</div>
+          <div className="hidden md:flex items-center gap-4">
+            <Link to={"/login"}><button className="font-semibold text-md cursor-pointer">Login</button></Link>
+            <button className="flex items-center gap-2 bg-green-900 text-white px-4 py-2 rounded cursor-pointer">
+              <div className="animate-bounce">
+              <TiShoppingCart size={26}/>
+              </div>
+              <div>
+                
+                <p className="font-semibold">My Cart</p>
+              </div>
+            </button>
           </div>
 
           <div className="md:hidden block">
