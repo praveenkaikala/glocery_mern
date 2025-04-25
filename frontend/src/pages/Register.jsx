@@ -1,7 +1,14 @@
+import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+import { AxiosPravite } from "../utils/Axios";
+import { summaryApi } from "../common/SummaryApi";
+import { toastError } from "../utils/toastError";
+import { useNavigate } from "react-router-dom";
+import { toastSuccess } from "../utils/toastSuccess";
+
 const Register = () => {
   const [userData, setUserData] = useState({
     name: "",
@@ -9,6 +16,7 @@ const Register = () => {
     password: "",
   });
   const [showPassword,setShowPassword]=useState(false)
+  const navigate=useNavigate()
   const handleChange = (e) => {
     setUserData({
       ...userData,
@@ -20,14 +28,29 @@ const Register = () => {
   }
   const validate=Object.values(userData).every(el=>el)
 
-  const handleSubmit=(e)=>{
+  const handleSubmit=async (e)=>{
     e.preventDefault()
     if(!validate)
     {
         toast.error("enter all fields")
         return
     }
-    console.log(userData)
+    try {
+        
+        const response=await AxiosPravite({...summaryApi.register,
+          data:userData
+        })
+        toastSuccess(response?.data?.message)
+        setUserData({
+            name: "",
+            email: "",
+            password: ""
+        })
+        navigate("/login")
+    } catch (error) {
+        toastError(error?.response?.data?.message || "Something Went Wrong")
+    }
+    console.log(response)
   }
   return (
     <section className="container mx-auto w-full">
