@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 const Register = () => {
@@ -21,7 +22,11 @@ const Register = () => {
 
   const handleSubmit=(e)=>{
     e.preventDefault()
-    
+    if(!validate)
+    {
+        toast.error("enter all fields")
+        return
+    }
     console.log(userData)
   }
   return (
