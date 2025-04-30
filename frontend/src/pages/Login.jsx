@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { FaEye, FaEyeSlash } from 'react-icons/fa6';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -80,6 +82,9 @@ const Login = () => {
             </div>
             <button className={`${validate?"bg-green-800 hover:bg-green-700 ease-in-out duration-500" : "bg-gray-400"} w-full text-white py-2 rounded cursor-pointer`} onClick={handleSubmit}>Login</button>
           </form>
+          <p className="py-3 px-2 font-semibold">
+            Don't Have Account ? <Link to={"/register"} className="text-green-800 hover:text-green-700 transition-all ease-in-out duration-300">Register</Link>
+        </p>
         </div>
       </section>
   )
