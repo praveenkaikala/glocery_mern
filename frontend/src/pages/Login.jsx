@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from 'react-icons/fa6';
 import { Link, useNavigate } from 'react-router-dom';
+import { toastSuccess } from '../utils/toastSuccess';
+import { toastError } from '../utils/toastError';
+import { AxiosPravite } from '../utils/Axios';
+import { summaryApi } from '../common/SummaryApi';
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -24,7 +29,7 @@ const Login = () => {
       e.preventDefault()
       if(!validate)
       {
-          toast.error("enter all fields")
+          toastError("enter all fields")
           return
       }
       try {
@@ -39,9 +44,9 @@ const Login = () => {
           })
           navigate("/")
       } catch (error) {
+          console.log(error)
           toastError(error?.response?.data?.message || "Something Went Wrong")
       }
-      console.log(response)
     }
     return (
       <section className="container mx-auto w-full">
