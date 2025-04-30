@@ -6,7 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { AxiosPravite } from "../utils/Axios";
 import { summaryApi } from "../common/SummaryApi";
 import { toastError } from "../utils/toastError";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toastSuccess } from "../utils/toastSuccess";
 
 const Register = () => {
@@ -32,7 +32,7 @@ const Register = () => {
     e.preventDefault()
     if(!validate)
     {
-        toast.error("enter all fields")
+        toast.error("Enter All Fields")
         return
     }
     try {
@@ -75,7 +75,7 @@ const Register = () => {
               id="email"
               name="email"
               type="email"
-              className="bg-blue-50 p-2 outline-none border focus-within:border-amber-300"
+              className="bg-blue-50 p-2 outline-none border focus-within:border-amber-300 rounded"
               onChange={handleChange}
               value={userData.email}
             />
@@ -86,7 +86,7 @@ const Register = () => {
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
-              className="bg-blue-50 p-2 outline-none border focus-within:border-amber-300"
+              className="bg-blue-50 p-2 outline-none border focus-within:border-amber-300 rounded"
               onChange={handleChange}
               value={userData.password}
             />
@@ -103,6 +103,9 @@ const Register = () => {
           </div>
           <button className={`${validate?"bg-green-800 hover:bg-green-700 ease-in-out duration-500" : "bg-gray-400"} w-full text-white py-2 rounded cursor-pointer`} onClick={handleSubmit}>Register</button>
         </form>
+        <p className="py-3 px-2 font-semibold">
+            Already Have Account ? <Link to={"/login"} className="text-green-800 hover:text-green-700 transition-all ease-in-out duration-300">Login</Link>
+        </p>
       </div>
     </section>
   );
