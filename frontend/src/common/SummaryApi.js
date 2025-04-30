@@ -8,5 +8,13 @@ export const summaryApi={
     login:{
         url:"/api/user/login",
         method:"post",
-    }
+    },
+    forgotPassword:{
+        url:"/api/user/forgot-password",
+        method:"put",
+    },
+    verifyOtp:{
+        url:"/api/user/verify-otp",
+        method:"post",
+    },
 }
