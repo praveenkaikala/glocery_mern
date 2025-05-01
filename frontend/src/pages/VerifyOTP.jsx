@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { toastError } from '../utils/toastError';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toastSuccess } from '../utils/toastSuccess';
 import { AxiosPravite } from '../utils/Axios';
 import { summaryApi } from '../common/SummaryApi';
@@ -10,6 +10,12 @@ const VerifyOTP = () => {
       const navigate=useNavigate()
       const validate=data.every(el=>el)
       const inputref=useRef([])
+      const location=useLocation();
+      useEffect(() => {
+        if (!location?.state?.email) {
+          navigate("/login");
+        }
+      }, [location]);
       const handleSubmit=async (e)=>{
         e.preventDefault()
         if(!validate)
@@ -19,14 +25,22 @@ const VerifyOTP = () => {
         }
         try {
             
-            const response=await AxiosPravite({...summaryApi.forgotPassword,
-              data:data
+            const response=await AxiosPravite({...summaryApi.verifyOtp,
+              data:{
+                otp:data.join(""),
+                email:location?.state?.email
+              }
             })
             toastSuccess(response?.data?.message)
             setData([
                 "","","","","",""
             ])
-            navigate("/verify-otp")
+            navigate("/reset-password",{
+              state:{
+                email:location?.state?.email,
+                response:response?.data
+              }
+            })
         } catch (error) {
             console.log(error)
             toastError(error?.response?.data?.message || "Something Went Wrong")

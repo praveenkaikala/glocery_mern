@@ -1,3 +1,5 @@
+
+
 export const baseApiUrl="http://localhost:5000"
 
 export const summaryApi={
@@ -15,6 +17,10 @@ export const summaryApi={
     },
     verifyOtp:{
         url:"/api/user/verify-otp",
-        method:"post",
+        method:"put",
+    },
+    resetPassword:{
+        url:"/api/user/reset-password",
+        method:"put",
     },
 }

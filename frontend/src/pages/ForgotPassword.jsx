@@ -30,7 +30,7 @@ const ForgotPassword = () => {
             return
         }
         try {
-            
+           
             const response=await AxiosPravite({...summaryApi.forgotPassword,
               data:userData
             })
@@ -38,7 +38,9 @@ const ForgotPassword = () => {
             setUserData({
                 email: "",
             })
-            navigate("/verify-otp")
+            navigate("/verify-otp",{
+              state:userData
+            })
         } catch (error) {
             console.log(error)
             toastError(error?.response?.data?.message || "Something Went Wrong")
