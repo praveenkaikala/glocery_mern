@@ -63,7 +63,6 @@ const ResetPassword = () => {
           [e.target.name]: e.target.value,
         });
       };
-      console.log("location",location)
   return (
     <section className="container mx-auto w-full mt-5">
         <div className="bg-white max-w-lg mx-auto p-4">
