@@ -36,8 +36,8 @@ const Login = () => {
         ...summaryApi.login,
         data: userData,
       });
-      localStorage.setItem("token", response?.data?.data?.accessToken);
-      localStorage.setItem("token", response?.data?.data?.refreshToken)
+      localStorage.setItem("accesstoken", response?.data?.data?.accessToken);
+      localStorage.setItem("refreshtoken", response?.data?.data?.refreshToken)
       toastSuccess(response?.data?.message);
       setUserData({
         email: "",
