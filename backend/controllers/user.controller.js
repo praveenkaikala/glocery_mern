@@ -11,7 +11,7 @@ export const registerUserController = async (req,res) => {
     if(!name || !email || !password)
     {
         return res.status(400).send({
-            message:"provide email,name,password",
+            message:"Provide Email,Name,Password",
             success:false,
             error:true
         })
@@ -20,7 +20,7 @@ export const registerUserController = async (req,res) => {
     if(user)
     {
         return res.status(400).send({
-            message:"already registered email",
+            message:"Already Registered Email",
             success:false,
             error:true
         })
@@ -37,7 +37,7 @@ export const registerUserController = async (req,res) => {
     const verificationLink=`${process.env.FRONTEND_URL}api/user/verify-email?code=${save?save._id:  "123455789"}`
     await sendEmail(email, name,verificationLink);
     return res.status(201).send({
-        message:"user created",
+        message:"User Registered",
         error:false,
         success:true
     })
@@ -58,7 +58,7 @@ export  const verifyEmailController = async (req,res) => {
     if(!user)
     {
         return res.status(400).send({
-            message:"invalid code",
+            message:"Invalid USer",
             error:true,
             success:false
         })
@@ -67,7 +67,7 @@ export  const verifyEmailController = async (req,res) => {
         verify_email:true
     })
     return res.status(200).send({
-        message:"email verified",
+        message:"Email Verified",
         error:false,
         success:true
     })
@@ -88,7 +88,7 @@ export const loginController = async (req,res) => {
     if(!email || !password)
     {
         return res.status(400).send({
-            message:"email,password required",
+            message:"Email,Password Required",
             success:false,
             error:true
         })
@@ -99,7 +99,7 @@ export const loginController = async (req,res) => {
         return res.status(404).send({
             success:false,
             error:true,
-            message:"user not found"
+            message:"User Not Found"
         })
     }
     if(user.status!="active")
@@ -107,7 +107,7 @@ export const loginController = async (req,res) => {
         return res.status(400).send({
             success:false,
             error:true,
-            message:"account inactive"
+            message:"Account Inactive"
         })
     }
     const check=await bcryptjs.compare(password,user.password)
@@ -116,7 +116,7 @@ export const loginController = async (req,res) => {
         return res.status(400).send({
             success:false,
             error:true,
-            message:"password invalid"
+            message:"Password Invalid"
         })
     }
 
@@ -132,7 +132,7 @@ export const loginController = async (req,res) => {
     return res.status(200).send({
         success:true,
         error:false,
-        message:"login success",
+        message:"Login SuccessFull",
         data:{
             accessToken,refreshToken
         }
@@ -163,7 +163,7 @@ export const logiOutController = async (req,res) => {
         refreshToken:""
     })
     return res.status(200).send({
-        message:"logout success",
+        message:"Logout Success",
         error:false,
         success:true
     })
@@ -189,7 +189,7 @@ export const uploadAvtar = async (req,res) => {
     return res.status(200).send({
         success:true,
         error:false,
-        message:"upload success",
+        message:"Upload Success",
         data:{
             _id:userId,
             url:upload.url
@@ -227,7 +227,7 @@ export const updateDetailsController = async (req,res) => {
     return res.status(200).send({
         success:true,
         error:false,
-        message:"update success",
+        message:"Update SuccessFull",
         data:updateUser
     })
   } catch (error) {
@@ -249,7 +249,7 @@ export const forgotPasswordController = async (req,res) => {
     if(!user)
     {
         return res.status(400).send({
-            message:"invalid email",
+            message:"Invalid Email",
             error:true,
             success:false
         })
@@ -264,7 +264,7 @@ export const forgotPasswordController = async (req,res) => {
     })
      await sentOtp(user.name,email,otp)
     return res.status(200).send({
-        message:"otp sent to email",
+        message:"Otp Sent To Email",
         error:false,
         success:true,
     })
@@ -283,7 +283,7 @@ export const verifyOtpController = async (req,res) => {
     if(!otp || !email)
         {
             return res.status(400).send({
-                message:"provide otp,email",
+                message:"Provide Otp,Email",
                 error:true,
                 success:false
             })
@@ -292,7 +292,7 @@ export const verifyOtpController = async (req,res) => {
     if(!user)
     {
         return res.status(400).send({
-            message:"invalid email",
+            message:"Invalid Email",
             error:true,
             success:false
         })
@@ -301,7 +301,7 @@ export const verifyOtpController = async (req,res) => {
     if(currTime > user.forgot_password_expiry)
     {
         return res.status(400).send({
-            message:"otp expire",
+            message:"Otp Expire",
             error:true,
             success:false
         })
@@ -310,14 +310,14 @@ export const verifyOtpController = async (req,res) => {
     if(otp !== user.forgot_password_otp)
     {
         return res.status(400).send({
-            message:"otp invalid",
+            message:"Otp Invalid",
             error:true,
             success:false
         })
     }
 
     return res.status(200).send({
-        message:"otp valid successfull",
+        message:"Otp Valid SuccessFull",
         error:false,
         success:true
     })
@@ -337,7 +337,7 @@ export const resetPassword = async (req,res) => {
     if(!newPassword || !email)
         {
             return res.status(400).send({
-                message:"provide email,password",
+                message:"Provide Email,Password",
                 error:true,
                 success:false
             })
@@ -346,7 +346,7 @@ export const resetPassword = async (req,res) => {
     if(!user)
     {
         return res.status(400).send({
-            message:"invalid email",
+            message:"Invalid Email",
             error:true,
             success:false
         })
@@ -360,7 +360,7 @@ export const resetPassword = async (req,res) => {
 
     })
     return res.status(200).send({
-        message:"password changed successfull",
+        message:"Password Changed SuccessFull",
         error:false,
         success:true
     })
@@ -382,7 +382,7 @@ export const refreshToken = async (req,res) => {
     if(!refreshToken)
     {
         return res.status(400).send({
-            message:"unotherized access",
+            message:"Unotherized Access",
             error:true,
             success:false
         })
@@ -392,7 +392,7 @@ export const refreshToken = async (req,res) => {
     if(!verifyToken)
     {
         return res.status(401).send({
-            message:"token expire",
+            message:"Token Expire",
             error:true,
             success:false
         })
