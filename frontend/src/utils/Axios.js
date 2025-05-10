@@ -17,3 +17,21 @@ AxiosPravite.interceptors.request.use((config)=>{
 },(error)=>{
     return Promise.reject(error)
 })
+
+AxiosPravite.interceptors.response.use((response)=>{
+    return response
+},async (error)=>{
+    const originalConfig=error.config
+    if(error?.response?.status===401 && !originalConfig._retry)
+    {
+        originalConfig._retry=true
+        try {
+            const response=await axios.get(`${baseApiUrl}/refresh`,{withCredentials:true})
+            localStorage.setItem("accesstoken",response?.data?.data?.accessToken)
+            return AxiosPravite(originalConfig)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    return Promise.reject(error)
+})
