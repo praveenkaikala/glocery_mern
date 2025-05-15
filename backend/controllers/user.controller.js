@@ -119,7 +119,8 @@ export const loginController = async (req,res) => {
             message:"Password Invalid"
         })
     }
-
+    user.last_login_date=new Date().toISOString()
+    await user.save()
     const accessToken=await genarateAccessToken(user._id);
     const refreshToken=await genarateRefreshToken(user._id)
     const cokkieOptions={
