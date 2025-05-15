@@ -1,3 +1,4 @@
+import { get } from "mongoose"
 
 
 export const baseApiUrl="http://localhost:5000"
@@ -22,5 +23,13 @@ export const summaryApi={
     resetPassword:{
         url:"/api/user/reset-password",
         method:"put",
+    },
+    getUserDetails:{
+        url:"/api/user/get-user-details",
+        method:"get",
+    },
+    verifyEmail:{
+        url:"/api/user/verify-email",
+        method:"get",
     },
 }
