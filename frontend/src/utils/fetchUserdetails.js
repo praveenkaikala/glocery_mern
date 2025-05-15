@@ -6,7 +6,8 @@ export const fetchUserDatail=async()=>{
         const resp=await AxiosPravite({
             ...summaryApi.getUserDetails,
         })
-        console.log("userdetails",resp?.data?.data)
+        return resp?.data?.data
+        // console.log("userdetails",resp?.data?.data)
     } catch (error) {
         console.log(error)
         

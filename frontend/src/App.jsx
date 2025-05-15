@@ -5,12 +5,17 @@ import Footer from "./components/Footer"
 import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from "react";
 import { fetchUserDatail } from "./utils/fetchUserdetails";
+import { useDispatch } from "react-redux";
+import { setUser } from "./store/userSlice";
 function App() {
+  const dispatch=useDispatch()
   const fetchUser = async () => {
     try {
-      await fetchUserDatail()
+      const data=await fetchUserDatail();
+      console.log("userdetails",data)
+      dispatch(setUser(data))
     } catch (error) {
-      console.log(error)
+      console.log("error",error)
     }
    }
   useEffect(()=>{
