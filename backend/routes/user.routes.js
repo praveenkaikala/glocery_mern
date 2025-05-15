@@ -1,6 +1,6 @@
 import express from "express"
 const router=express.Router()
-import { forgotPasswordController, loginController, logiOutController, refreshToken, registerUserController, resetPassword, updateDetailsController, uploadAvtar, verifyEmailController, verifyOtpController } from "../controllers/user.controller.js"
+import { forgotPasswordController, loginController, logiOutController, refreshToken, registerUserController, resetPassword, updateDetailsController, uploadAvtar, userDetailControllers, verifyEmailController, verifyOtpController } from "../controllers/user.controller.js"
 import { authMiddleware } from "../middleware/auth.js"
 import { upload } from "../middleware/multer.js"
 
@@ -15,4 +15,5 @@ router.put("/forgot-password",forgotPasswordController);
 router.put("/verify-otp",verifyOtpController)
 router.put("/reset-password",resetPassword)
 router.get("/refresh-token",refreshToken)
+router.get("/get-user-details",authMiddleware,userDetailControllers)
 export default router

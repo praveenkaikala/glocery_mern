@@ -419,3 +419,32 @@ export const refreshToken = async (req,res) => {
     })
   }
 };
+
+
+
+export const userDetailControllers = async (req,res) => {
+  try {
+    const userId=req.userId
+    const user=await userModel.findById(userId).select("-password -__v -createdAt -updatedAt")
+    if(!user)
+    {
+        return res.status(400).send({
+            message:"User Not Found",
+            error:true,
+            success:false
+        })
+    }
+    return res.status(200).send({
+        message:"User Found",
+        error:false,
+        success:true,
+        data:user
+    })
+  } catch (error) {
+    return res.status(500).send({
+        success:false,
+        error:true,
+        message:error.message || error
+    })
+  }
+} 
