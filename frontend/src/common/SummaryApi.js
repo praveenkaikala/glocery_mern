@@ -32,4 +32,8 @@ export const summaryApi={
         url:"/api/user/verify-email",
         method:"get",
     },
+    logOut:{
+         url:"/api/user/logout",
+           method:"get"
+    }
 }
