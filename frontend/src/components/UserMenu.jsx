@@ -7,7 +7,7 @@ import { AxiosPravite } from '../utils/Axios'
 import { summaryApi } from '../common/SummaryApi'
 import { removeUser } from '../store/userSlice'
 import { toastSuccess } from '../utils/toastSuccess'
-
+import { IoIosLink } from "react-icons/io";
 const UserMenu = () => {
     const user=useSelector(state=>state?.user)
     const dispatch=useDispatch()
@@ -26,10 +26,14 @@ const UserMenu = () => {
     <div className='bg-white rounded shadow px-3 py-2 text-sm    min-w-52'>
         <div className='w-full'>
             <div className="font-semibold ">My Account</div>
-            <div >
+            <div className='flex gap-2 items-center'>
+                <span className=' max-w-50 text-ellipsis line-clamp-1'>
+
                 {
                     user?.name || user?.mobile
                 }
+                </span>
+                <Link to={"/dashboard/profile"} className='hover:text-amber-300'><IoIosLink/></Link>
             </div>
             <Divider/>
             <div className='flex-col grid gap-2 mt-3'>

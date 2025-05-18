@@ -7,6 +7,8 @@ import Register from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
 import VerifyOTP from "../pages/VerifyOTP";
 import ResetPassword from "../pages/ResetPassword";
+import Dashboard from "../layouts/Dashboard";
+import Profile from "../pages/Profile";
 
 export const router=createBrowserRouter([
     {
@@ -43,6 +45,15 @@ export const router=createBrowserRouter([
         path:"reset-password",
         element:<ResetPassword/>
     }
-
+    ,{
+        path:"dashboard",
+        element:<Dashboard/>,
+        children:[
+            {
+                path:"profile",
+                element:<Profile/>
+            }
+        ]
+    }
 
 ])
