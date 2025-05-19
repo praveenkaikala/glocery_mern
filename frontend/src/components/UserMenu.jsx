@@ -37,8 +37,8 @@ const UserMenu = () => {
             </div>
             <Divider/>
             <div className='flex-col grid gap-2 mt-3'>
-                <Link to={""}>My Orders</Link>
-                <Link to={""}>Save Addresses</Link>
+                <Link to={"/dashboard/myorders"}>My Orders</Link>
+                <Link to={"/dashboard/address"}>Save Address</Link>
                 <button className='w-full text-left cursor-pointer '  onClick={handleLogOut}>LogOut</button>
             </div>
         </div>

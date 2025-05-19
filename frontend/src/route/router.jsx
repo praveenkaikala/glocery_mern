@@ -9,6 +9,8 @@ import VerifyOTP from "../pages/VerifyOTP";
 import ResetPassword from "../pages/ResetPassword";
 import Dashboard from "../layouts/Dashboard";
 import Profile from "../pages/Profile";
+import MyOrders from "../pages/MyOrders";
+import Address from "../pages/Address";
 
 export const router=createBrowserRouter([
     {
@@ -22,6 +24,24 @@ export const router=createBrowserRouter([
             {
                 path:"/search",
                 element:<SearchPage/>
+            }
+            ,{
+                path:"dashboard",
+                element:<Dashboard/>,
+                children:[
+                    {
+                        path:"profile",
+                        element:<Profile/>
+                    },
+                    {
+                        path:"myorders",
+                        element:<MyOrders/>
+                    },
+                    {
+                        path:"address",
+                        element:<Address/>
+                    }
+                ]
             }
         ]
     },
@@ -45,15 +65,6 @@ export const router=createBrowserRouter([
         path:"reset-password",
         element:<ResetPassword/>
     }
-    ,{
-        path:"dashboard",
-        element:<Dashboard/>,
-        children:[
-            {
-                path:"profile",
-                element:<Profile/>
-            }
-        ]
-    }
+    
 
 ])
