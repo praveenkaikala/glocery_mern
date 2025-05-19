@@ -9,7 +9,7 @@ const Dashboard = () => {
         <div className='sticky top-24 overflow-y-auto md:block hidden'>
             <UserMenu/>
         </div>
-        <div className='overflow-y-auto w-full shadow md:col-span-3'>
+        <div className='overflow-y-auto w-full shadow md:col-span-3 p-3'>
            <Outlet/>
         </div>
       </div>
