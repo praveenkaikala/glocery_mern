@@ -12,7 +12,7 @@ function App() {
   const fetchUser = async () => {
     try {
       const data=await fetchUserDatail();
-      console.log("userdetails",data)
+  
       dispatch(setUser(data))
     } catch (error) {
       console.log("error",error)

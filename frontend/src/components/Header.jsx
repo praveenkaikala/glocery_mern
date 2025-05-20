@@ -15,8 +15,6 @@ const Header = () => {
   const [showuserMenu,setUserShowMenu]=useState(false)
   const user=useSelector(state=>state?.user)
   const isSearchpage = location.pathname === "/search";
-  console.log("is search page", isSearchpage);
-  console.log("ismobile", isMobile);
   const handleUserMenu=()=>{
     setUserShowMenu(!showuserMenu)
   }
