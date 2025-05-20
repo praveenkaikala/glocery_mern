@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 const Dashboard = () => {
   return (
-    <section className="bg-white h-screen">
+    <section className="bg-white">
      <div className=" container mx-auto p-3 grid md:grid-cols-4 h-full">
         <div className='sticky top-24 overflow-y-auto md:block hidden'>
             <UserMenu/>
