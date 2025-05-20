@@ -8,7 +8,7 @@ import { summaryApi } from '../common/SummaryApi'
 import { removeUser } from '../store/userSlice'
 import { toastSuccess } from '../utils/toastSuccess'
 import { IoIosLink } from "react-icons/io";
-const UserMenu = () => {
+const UserMenu = ({close}) => {
     const user=useSelector(state=>state?.user)
     const dispatch=useDispatch()
     const handleLogOut=async()=>{
@@ -22,6 +22,13 @@ const UserMenu = () => {
             toastError(error?.response?.data?.message || "LogOut Failed")
         }
     }
+    const handleClose=()=>{
+        if(close)
+        {
+
+            close()
+        }
+    }
   return (
     <div className='bg-white rounded shadow px-3 py-2 text-sm    min-w-52'>
         <div className='w-full'>
@@ -33,12 +40,12 @@ const UserMenu = () => {
                     user?.name || user?.mobile
                 }
                 </span>
-                <Link to={"/dashboard/profile"} className='hover:text-amber-300'><IoIosLink/></Link>
+                <Link onClick={handleClose} to={"/dashboard/profile"} className='hover:text-amber-300'><IoIosLink/></Link>
             </div>
             <Divider/>
             <div className='flex-col grid gap-2 mt-3'>
-                <Link to={"/dashboard/myorders"}>My Orders</Link>
-                <Link to={"/dashboard/address"}>Save Address</Link>
+                <Link onClick={handleClose} to={"/dashboard/myorders"}>My Orders</Link>
+                <Link onClick={handleClose} to={"/dashboard/address"}>Save Address</Link>
                 <button className='w-full text-left cursor-pointer '  onClick={handleLogOut}>LogOut</button>
             </div>
         </div>

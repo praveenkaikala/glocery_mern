@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import logo from "../assets/logo.webp";
 import Search from "./Search";
 import { Link, useLocation } from "react-router-dom";
@@ -18,6 +18,16 @@ const Header = () => {
   const handleUserMenu=()=>{
     setUserShowMenu(!showuserMenu)
   }
+  const menuRef=useRef(null)
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowUserMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   return (
     <header className="h-26 md:h-18 md:shadow-md sticky top-0 flex md:items-center justify-around md:flex-row flex-col md:justify-between bg-white">
       
@@ -58,7 +68,7 @@ const Header = () => {
           <div className="hidden md:flex items-center gap-4">
             {
               user?._id ? (
-                <div className="relative w-auto" >
+                <div className="relative w-auto" ref={menuRef}>
                   <div className="flex gap-2 p-2 rounded items-center cursor-pointer hover:bg-green-800 hover:text-white transition-all ease-in-out duration-300" onClick={handleUserMenu}>
                     <p>Account</p>
                     {
@@ -71,7 +81,7 @@ const Header = () => {
                     }
                     </div>
                     <div className="absolute right-10 top-14">
-                     { showuserMenu && <UserMenu/>}
+                     { showuserMenu && <UserMenu close={()=>setUserShowMenu(!showuserMenu)}/>}
                       </div>
                   </div>
               ):(
