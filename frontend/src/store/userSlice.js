@@ -36,10 +36,15 @@ import { createSlice } from "@reduxjs/toolkit";
         },
         updateAvatar:(state,action)=>{
             state.avatar=action.payload
+        },
+        updateUser:(state,action)=>{
+            state.name=action.payload?.name
+            state.email=action.payload?.email
+            state.mobile=action.payload?.mobile
         }
 
     }
 })
 
-export const {setUser,removeUser,updateAvatar}=userSlice.actions
+export const {setUser,removeUser,updateAvatar,updateUser}=userSlice.actions
 export default userSlice.reducer
