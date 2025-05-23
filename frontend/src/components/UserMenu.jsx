@@ -8,6 +8,7 @@ import { summaryApi } from '../common/SummaryApi'
 import { removeUser } from '../store/userSlice'
 import { toastSuccess } from '../utils/toastSuccess'
 import { IoIosLink } from "react-icons/io";
+import { isAdmin } from '../utils/isAdmin'
 const UserMenu = ({close}) => {
     const user=useSelector(state=>state?.user)
     const dispatch=useDispatch()
@@ -30,7 +31,7 @@ const UserMenu = ({close}) => {
         }
     }
   return (
-    <div className='bg-white rounded shadow px-3 py-2 text-sm    min-w-52'>
+    <div className='bg-white rounded shadow px-3 py-2 text-sm border-r border-gray-300    min-w-52'>
         <div className='w-full'>
             <div className="font-semibold ">My Account</div>
             <div className='flex gap-2 items-center'>
@@ -44,6 +45,20 @@ const UserMenu = ({close}) => {
             </div>
             <Divider/>
             <div className='flex-col grid gap-2 mt-3'>
+                {
+                    isAdmin(user?.role) &&  <Link onClick={handleClose} to={"/dashboard/category"}>Category</Link>
+               
+}
+{
+                    isAdmin(user?.role) &&  <Link onClick={handleClose} to={"/dashboard/sub-category"}>Sub Category</Link>
+               
+                }
+                {
+                    isAdmin(user?.role) &&  <Link onClick={handleClose} to={"/dashboard/upload-product"}>Upload Product</Link>
+                }
+                 {
+                    isAdmin(user?.role) &&  <Link onClick={handleClose} to={"/dashboard/product"}> Product</Link>
+                }
                 <Link onClick={handleClose} to={"/dashboard/myorders"}>My Orders</Link>
                 <Link onClick={handleClose} to={"/dashboard/address"}>Save Address</Link>
                 <button className='w-full text-left cursor-pointer '  onClick={handleLogOut}>LogOut</button>

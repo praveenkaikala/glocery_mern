@@ -1,4 +1,4 @@
-const isAdmin=(data)=>{
+export const isAdmin=(data)=>{
     if(data==="Admin")
     {
         return true;

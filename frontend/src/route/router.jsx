@@ -14,6 +14,7 @@ import Address from "../pages/Address";
 import Category from "../pages/Category";
 import SubCategory from "../pages/SubCategory";
 import Product from "../pages/Product";
+import { Uploadproduct } from "../pages/Uploadproduct";
 
 export const router=createBrowserRouter([
     {
@@ -55,6 +56,10 @@ export const router=createBrowserRouter([
                     {
                         path:"product",
                         element:<Product/>
+                    },
+                    {
+                        path:"upload-product",
+                        element:<Uploadproduct/>
                     }
                 ]
             }
