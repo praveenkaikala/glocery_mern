@@ -6,6 +6,7 @@ import dotenv from "dotenv"
 dotenv.config()
 import cokkieparser from "cookie-parser"
 import userRouter from "./routes/user.routes.js"
+import categoryRouter from "./routes/category.routes.js"
 import { connectDatabase } from "./utils/connectDB.js";
 app.use(cors({
     credentials:true,
@@ -17,6 +18,7 @@ app.get("/",(req,res)=>{
     res.send("hello user");
 })
 app.use("/api/user",userRouter)
+app.use("/api/user",categoryRouter)
 app.use(helmet({
     crossOriginResourcePolicy:false
 }))
