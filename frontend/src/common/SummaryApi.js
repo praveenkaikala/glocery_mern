@@ -43,5 +43,9 @@ export const summaryApi={
     updateDetails:{
         url:"/api/user/update-user",
         method:"put"
+    },
+    createCategory:{
+         url:"/api/user/create-category",
+         method:"post",
     }
 }
