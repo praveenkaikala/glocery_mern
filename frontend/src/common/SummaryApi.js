@@ -47,5 +47,9 @@ export const summaryApi={
     createCategory:{
          url:"/api/user/create-category",
          method:"post",
+    },
+    getCategotyList:{
+        url:"/api/user/get-category",
+        method:"get"
     }
 }

@@ -1,8 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UploadCategory from '../components/UploadCategory'
+import { AxiosPravite } from '../utils/Axios'
+import { summaryApi } from '../common/SummaryApi'
 
 const Category = () => {
     const [showUploadCategory,setShowUploadCategory]=useState(false)
+    const [categoryData,setCategoryData]=useState([])
+    const fetchCategoryList=async()=>{
+      try {
+        const resp=await AxiosPravite({
+          ...summaryApi.getCategotyList,
+        })
+        setCategoryData(resp?.data?.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    useEffect(()=>{
+      fetchCategoryList()
+    },[])
   return (
     <section>
         <div className='p-2 container bg-white shadow flex items-center gap-4'>
