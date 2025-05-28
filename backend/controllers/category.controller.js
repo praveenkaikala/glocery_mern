@@ -27,9 +27,26 @@ export const createCategoryController=async(req,res)=>{
 
     } catch (error) {
         return res.status(500).send({
-            message:error,
+            message:error.message || error,
             success:false,
             error:true
+        })
+    }
+}
+export const getCategoryController=async(req,res)=>{
+    try {
+        const data=await categoryModel.find()
+        return res.status(200).send({
+            message:"category List",
+            success:true,
+            error:false,
+            data
+        })
+    } catch (error) {
+        return res.status(500).send({
+            message:error?.message || error,
+            success:false,
+            errro:true
         })
     }
 }
