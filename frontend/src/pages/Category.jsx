@@ -3,6 +3,7 @@ import UploadCategory from "../components/UploadCategory";
 import { AxiosPravite } from "../utils/Axios";
 import { summaryApi } from "../common/SummaryApi";
 import SkeletonLoader from "../components/SkeletonLoader";
+import NoData from "../components/NoData";
 
 const Category = () => {
   const [showUploadCategory, setShowUploadCategory] = useState(false);
@@ -45,7 +46,7 @@ const Category = () => {
       )}
       {!loading && !categoryData && (
         <div>
-          <h2>no data</h2>
+         <NoData/>
         </div>
       )}
       {
