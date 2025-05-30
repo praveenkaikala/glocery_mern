@@ -50,3 +50,35 @@ export const getCategoryController=async(req,res)=>{
         })
     }
 }
+
+export const UpdateCategoryController=async(req,res)=>{
+    try {
+        const image=req.file;
+        const {name,id}=req.body;
+        const imageUrl= await uploadImage(image)
+        const category=await categoryModel.updateOne({_id:id},{
+            name,
+            image:imageUrl.url
+        })
+        if(!category)
+        {
+            return res.status(403).send({
+            message:"Category Not Updated",
+            success:false,
+            error:true
+            })
+        }
+        return  res.status(200).send({
+            message:"Category Updated",
+            success:true,
+            error:false
+            })
+
+    } catch (error) {
+        return res.status(500).send({
+            message:error.message || error,
+            success:false,
+            error:true
+        })
+    }
+}
