@@ -82,3 +82,31 @@ export const UpdateCategoryController=async(req,res)=>{
         })
     }
 }
+
+export const DeleteCategoryController=async(req,res)=>{
+    try {
+       
+        const {id}=req.body;
+        const category=await categoryModel.deleteOne({_id:id})
+        if(!category)
+        {
+            return res.status(403).send({
+            message:"Category Not Deleted",
+            success:false,
+            error:true
+            })
+        }
+        return  res.status(200).send({
+            message:"Category Deleted",
+            success:true,
+            error:false
+            })
+
+    } catch (error) {
+        return res.status(500).send({
+            message:error.message || error,
+            success:false,
+            error:true
+        })
+    }
+}
