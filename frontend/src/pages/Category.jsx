@@ -26,7 +26,7 @@ const Category = () => {
     fetchCategoryList();
   }, []);
   return (
-    <section>
+    <section >
       <div className="p-2 container bg-white shadow flex items-center gap-4">
         <h2 className="font-semibold">Category</h2>
         <button
@@ -51,8 +51,17 @@ const Category = () => {
       )}
       {
         categoryData.length>0 && 
-        <div>
-          data
+        <div className=" grid grid-cols-2 md:grid-cols-5 gap-4 p-3 ">
+          {
+            categoryData?.map((data,ind)=>{
+              return(
+                <div className="h-40 p-3 border-b-2 border-red-500 rounded-xl group cursor-pointer hover:bg-gray-100 flex items-center flex-col z-1">
+                  <img src={data?.image} alt={data?.name} className="w-32 h-28 object-scale-down group-hover:scale-[1.1] rounded-xl transition-all ease-in-out duration-500"  />
+                  <h2>{data?.name}</h2>
+                  </div>
+              )
+            })
+          }
         </div>
       }
     </section>
