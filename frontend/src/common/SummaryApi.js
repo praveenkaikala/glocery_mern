@@ -55,5 +55,9 @@ export const summaryApi={
     updateCategory:{
         url:"/api/user/update-category",
         method:"put"
+    },
+    deleteCategoty:{
+        url:"/api/user/delete-category",
+        method:"delete"
     }
 }
