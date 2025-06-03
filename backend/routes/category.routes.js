@@ -7,5 +7,5 @@ const router=express.Router()
 
 router.post("/create-category",authMiddleware,adminAuth,upload.single("image"),createCategoryController);
 router.put("/update-category",authMiddleware,adminAuth,upload.single("image"),UpdateCategoryController);
-router.get("/get-category",authMiddleware,adminAuth,getCategoryController)
+router.delete("/get-category",authMiddleware,adminAuth,getCategoryController)
 export default router
