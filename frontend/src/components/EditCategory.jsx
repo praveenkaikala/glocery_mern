@@ -5,15 +5,11 @@ import { summaryApi } from "../common/SummaryApi";
 import { toastSuccess } from "../utils/toastSuccess";
 import { toastError } from "../utils/toastError";
 import DotLoading from "./DotLoading";
-const UploadCategory = ({ close,reFetch,setReFetch }) => {
-  const [data, setData] = useState({
-    name: "",
-    image: "",
-  });
+const EditCategory = ({ close,editData,setEditData,reFetch,setReFetch }) => {
   const [loading, setLoading] = useState(false);
   const [categoryImage, setCategoryImage] = useState("");
   const handleChange = (e) => {
-    setData((prev) => {
+    setEditData((prev) => {
       return {
         ...prev,
         [e.target.name]: e.target.value,
@@ -24,7 +20,7 @@ const UploadCategory = ({ close,reFetch,setReFetch }) => {
     const image = e.target.files[0];
     console.log(image);
     if (!image) return;
-    setData((prev) => {
+    setEditData((prev) => {
       return {
         ...prev,
         image: image,
@@ -36,7 +32,7 @@ const UploadCategory = ({ close,reFetch,setReFetch }) => {
     };
     reader.readAsDataURL(image);
   };
-  const validate = data.name.trim() !== "" && data.image instanceof File;
+  const validate = editData.name.trim() !== "" && editData.image instanceof File;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate) {
@@ -45,10 +41,11 @@ const UploadCategory = ({ close,reFetch,setReFetch }) => {
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append("name", data?.name);
-      formData.append("image", data?.image);
+      formData.append("name", editData?.name);
+      formData.append("image", editData?.image);
+       formData.append("id", editData?._id);
       const resp = await AxiosPravite({
-        ...summaryApi.createCategory,
+        ...summaryApi.updateCategory,
         data: formData,
       });
       toastSuccess(resp?.data?.message);
@@ -61,7 +58,7 @@ const UploadCategory = ({ close,reFetch,setReFetch }) => {
     }
   };
   return (
-    <section className="fixed top-0 bottom-0 left-0 right-0 bg-neutral-900/60  p-4 flex  items-center justify-center ">
+    <section className="fixed top-0 bottom-0 left-0 right-0 bg-neutral-900/60 z-100  p-4 flex  items-center justify-center ">
       <div className="bg-white max-w-sm w-full p-3 flex  flex-col rounded-sm">
         <div className="w-full flex justify-between">
           <h2 className="font-semibold">Category</h2>
@@ -76,10 +73,10 @@ const UploadCategory = ({ close,reFetch,setReFetch }) => {
             <div className="grid gap-2 px-2">
               <h2>Image</h2>
               <div className="w-36 h-36 bg-blue-50 flex items-center justify-center rounded">
-                {categoryImage ? (
+                {editData?.image ? (
                   <img
-                    src={categoryImage}
-                    alt={data?.name}
+                    src={categoryImage ||   editData?.image}
+                    alt={editData?.name}
                     className="w-full h-full object-cover"
                     loading="lazy"
                   />
@@ -105,7 +102,7 @@ const UploadCategory = ({ close,reFetch,setReFetch }) => {
             <label htmlFor="name">Categoty Name</label>
             <input
               onChange={handleChange}
-              value={data?.name}
+              value={editData?.name}
               className="bg-blue-50 outline-none border rounded focus-within:border-amber-300 py-1 px-2"
               id="name"
               name="name"
@@ -119,7 +116,7 @@ const UploadCategory = ({ close,reFetch,setReFetch }) => {
                 : "bg-gray-200"
             }`}
           >
-            {loading ? "Creating..." : "Save Category"}
+            {loading ? "Updating..." : "Update Category"}
           </button>
         </form>
       </div>
@@ -127,4 +124,4 @@ const UploadCategory = ({ close,reFetch,setReFetch }) => {
   );
 };
 
-export default UploadCategory;
+export default EditCategory;
