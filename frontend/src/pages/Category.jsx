@@ -5,6 +5,9 @@ import { summaryApi } from "../common/SummaryApi";
 import SkeletonLoader from "../components/SkeletonLoader";
 import NoData from "../components/NoData";
 import EditCategory from "../components/EditCategory";
+import ConfirmBox from "../components/ConfirmBox";
+import toast from "react-hot-toast";
+import { toastSuccess } from "../utils/toastSuccess";
 
 const Category = () => {
   const [showUploadCategory, setShowUploadCategory] = useState(false);
@@ -17,6 +20,8 @@ const Category = () => {
   })
   const [reFetch,setReFetch]=useState(false)
   const [editModelOpen,setEditModelOpen]=useState(false);
+  const [deleteModel,setDeleteModel]=useState(false)
+  const [deleteId,setDeleteId]=useState("")
   const fetchCategoryList = async () => {
     try {
       setLoading(true);
@@ -33,6 +38,26 @@ const Category = () => {
   useEffect(() => {
     fetchCategoryList();
   }, [reFetch]);
+  const handleDelete=async()=>{
+    try {
+      if(!deleteId) return
+      const resp=await AxiosPravite({
+        ...summaryApi.deleteCategoty,
+        data:{
+          id:deleteId
+        }
+      })
+      toastSuccess(resp?.data?.message)
+      
+      fetchCategoryList()
+    } catch (error) {
+      console.log(error)
+       toastError(error?.response?.data?.message || "Category Deletion Failed");
+    }
+    finally{
+      setDeleteModel(false)
+    }
+  }
   return (
     <section>
       <div className="p-2 container bg-white shadow flex items-center gap-4">
@@ -52,6 +77,11 @@ const Category = () => {
           <EditCategory reFetch={reFetch} setReFetch={setReFetch} close={()=>setEditModelOpen(false)} editData={editData} setEditData={setEditData}/>
         )
       }
+      {
+        deleteModel &&(
+          <ConfirmBox close={()=>setDeleteModel(false)} cancel={()=>setDeleteModel(false)} confirm={handleDelete}/>
+        )
+      }
       {loading && (
         <div className="w-full h-[60vh] grid gap-3 py-3 overflow-y-hidden">
           <SkeletonLoader />
@@ -62,31 +92,33 @@ const Category = () => {
           <NoData />
         </div>
       )}
-      {categoryData.length > 0 && (
-        <div className=" grid grid-cols-2 md:grid-cols-5 gap-4 p-3 ">
+      {categoryData.length > 0 && !loading && (
+       <div className='p-4 grid  grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2'>
           {categoryData?.map((data, ind) => {
-            return (
-              <div className="h-50 p-3 border-b-2 border-red-500 rounded-xl group cursor-pointer hover:bg-gray-100 flex items-center flex-col ">
-                <img
-                  src={data?.image}
-                  alt={data?.name}
-                  className="w-32 h-28 object-scale-down group-hover:scale-[1.1] rounded-xl transition-all ease-in-out duration-500"
-                />
-                <h2>{data?.name}</h2>
-
-                <div className="group-hover:opacity-100 group-hover:scale-100 opacity-0 scale-95 transform transition-all duration-300 ease-in-out gap-2 py-2 flex">
-                  <button className="px-3 text-green-500 border border-green-500 rounded cursor-pointer hover:bg-green-500 hover:text-white transition-all duration-300 ease-in-out" onClick={()=>{
-                    setEditModelOpen(true)
-                    setEditData(data)
-                  }}>
-                    Edit
-                  </button>
-                  <button className="px-3 text-red-500 border border-red-500 rounded cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 ease-in-out">
-                    Delete
-                  </button>
-                </div>
-              </div>
-            );
+            return(
+                        <div className='w-32 h-45 rounded shadow-md p-2 flex flex-col gap-1' key={data._id}>
+                            <img 
+                                alt={data.name}
+                                src={data.image}
+                                className='w-full h-23 object-scale-down'
+                            />
+                            <p className=" text-center overflow-hidden">{data?.name}</p>
+                            <div className='items-center h-9 flex gap-2'>
+                                <button onClick={()=>{
+                                   setEditModelOpen(true)
+                                    setEditData(data)
+                                }} className='flex-1 cursor-pointer bg-green-100 hover:bg-green-200 text-green-600 font-medium py-1 rounded'>
+                                    Edit
+                                </button>
+                                <button onClick={()=>{
+                                   setDeleteId(data?._id)
+                                   setDeleteModel(true)
+                                }} className='flex-1 cursor-pointer bg-red-100 hover:bg-red-200 text-red-600 font-medium py-1 rounded'>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    )
           })}
         </div>
       )}
