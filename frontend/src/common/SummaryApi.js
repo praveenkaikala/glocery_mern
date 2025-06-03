@@ -51,5 +51,9 @@ export const summaryApi={
     getCategotyList:{
         url:"/api/user/get-category",
         method:"get"
+    },
+    updateCategory:{
+        url:"/api/user/update-category",
+        method:"put"
     }
 }
