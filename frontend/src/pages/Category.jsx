@@ -96,13 +96,13 @@ const Category = () => {
        <div className='p-4 grid  grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2'>
           {categoryData?.map((data, ind) => {
             return(
-                        <div className='w-32 h-45 rounded shadow-md p-2 flex flex-col gap-1' key={data._id}>
+                        <div className='w-32 min-h-45 h-auto rounded shadow-md p-2 flex flex-col justify-between gap-2' key={data._id}>
                             <img 
                                 alt={data.name}
                                 src={data.image}
                                 className='w-full h-23 object-scale-down'
                             />
-                            <p className=" text-center overflow-hidden">{data?.name}</p>
+                            <p className=" text-center ">{data?.name}</p>
                             <div className='items-center h-9 flex gap-2'>
                                 <button onClick={()=>{
                                    setEditModelOpen(true)
