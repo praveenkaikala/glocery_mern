@@ -29,7 +29,7 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   return (
-    <header className="h-26 md:h-18 md:shadow-md sticky z-50 top-0 flex md:items-center justify-around md:flex-row flex-col md:justify-between bg-white">
+    <header className="h-26 md:h-18 md:shadow-md sticky  top-0 flex md:items-center justify-around md:flex-row flex-col md:justify-between bg-white">
       
       {/* mobile verison */}
       
