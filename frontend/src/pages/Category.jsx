@@ -107,13 +107,13 @@ const Category = () => {
                                 <button onClick={()=>{
                                    setEditModelOpen(true)
                                     setEditData(data)
-                                }} className='flex-1 cursor-pointer bg-green-100 hover:bg-green-200 text-green-600 font-medium py-1 rounded'>
+                                }} className='flex-1 cursor-pointer bg-green-100 hover:bg-green-200 text-green-600 font-medium py-1 px-2 rounded'>
                                     Edit
                                 </button>
                                 <button onClick={()=>{
                                    setDeleteId(data?._id)
                                    setDeleteModel(true)
-                                }} className='flex-1 cursor-pointer bg-red-100 hover:bg-red-200 text-red-600 font-medium py-1 rounded'>
+                                }} className='flex-1 cursor-pointer bg-red-100 hover:bg-red-200 text-red-600 font-medium py-1 px-2 rounded'>
                                     Delete
                                 </button>
                             </div>
