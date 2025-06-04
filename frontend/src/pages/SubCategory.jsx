@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import UploadSubCategoryModel from "../components/UploadSubCategoryModel";
 
 const SubCategory = () => {
     const [showUploadSubCategory, setShowUploadSubCategory] = useState(false);
@@ -13,6 +14,9 @@ const SubCategory = () => {
           Add SubCategory
         </button>
       </div>
+      {
+        showUploadSubCategory && <UploadSubCategoryModel close={()=>setShowUploadSubCategory(false)}/>
+      }
     </section>
   );
 };
