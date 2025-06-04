@@ -15,6 +15,7 @@ import Category from "../pages/Category";
 import SubCategory from "../pages/SubCategory";
 import Product from "../pages/Product";
 import { Uploadproduct } from "../pages/Uploadproduct";
+import Permission from "../layouts/Permission";
 
 export const router=createBrowserRouter([
     {
@@ -47,19 +48,19 @@ export const router=createBrowserRouter([
                     },
                     {
                         path:"category",
-                        element:<Category/>
+                        element:<Permission><Category/></Permission>
                     },
                     {
                         path:"sub-category",
-                        element:<SubCategory/>
+                        element:<Permission><SubCategory/></Permission>
                     },
                     {
                         path:"product",
-                        element:<Product/>
+                        element:<Permission><Product/></Permission>
                     },
                     {
                         path:"upload-product",
-                        element:<Uploadproduct/>
+                        element:<Permission><Uploadproduct/></Permission>
                     }
                 ]
             }
