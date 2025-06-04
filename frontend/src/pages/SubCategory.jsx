@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useState } from "react";
 
 const SubCategory = () => {
+    const [showUploadSubCategory, setShowUploadSubCategory] = useState(false);
   return (
-    <div>SubCategory</div>
-  )
-}
+    <section>
+      <div className="p-2 container bg-white shadow flex items-center gap-4">
+          <h2 className="font-semibold">Sub Category</h2>
+        <button
+          className="border border-amber-300 hover:bg-amber-300 transition-all ease-in-out rounded py-1 px-2 cursor-pointer"
+          onClick={() => setShowUploadSubCategory(true)}
+        >
+          Add SubCategory
+        </button>
+      </div>
+    </section>
+  );
+};
 
-export default SubCategory
+export default SubCategory;
