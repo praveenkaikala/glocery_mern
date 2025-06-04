@@ -35,7 +35,7 @@ export const createCategoryController=async(req,res)=>{
 }
 export const getCategoryController=async(req,res)=>{
     try {
-        const data=await categoryModel.find()
+        const data=await categoryModel.find().sort({createdAt:-1})
         return res.status(200).send({
             message:"category List",
             success:true,
