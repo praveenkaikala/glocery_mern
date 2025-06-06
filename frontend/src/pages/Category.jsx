@@ -8,6 +8,7 @@ import EditCategory from "../components/EditCategory";
 import ConfirmBox from "../components/ConfirmBox";
 import toast from "react-hot-toast";
 import { toastSuccess } from "../utils/toastSuccess";
+import { useSelector } from "react-redux";
 
 const Category = () => {
   const [showUploadCategory, setShowUploadCategory] = useState(false);
@@ -18,26 +19,30 @@ const Category = () => {
     image:"",
     name:""
   })
+  const {category}=useSelector((state)=>state?.product)
   const [reFetch,setReFetch]=useState(false)
   const [editModelOpen,setEditModelOpen]=useState(false);
   const [deleteModel,setDeleteModel]=useState(false)
   const [deleteId,setDeleteId]=useState("")
-  const fetchCategoryList = async () => {
-    try {
-      setLoading(true);
-      const resp = await AxiosPravite({
-        ...summaryApi.getCategotyList,
-      });
-      setCategoryData(resp?.data?.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchCategoryList();
-  }, [reFetch]);
+  // const fetchCategoryList = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const resp = await AxiosPravite({
+  //       ...summaryApi.getCategotyList,
+  //     });
+  //     setCategoryData(resp?.data?.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchCategoryList();
+  // }, [reFetch]);
+  useEffect(()=>{
+    setCategoryData(category)
+  },[])
   const handleDelete=async()=>{
     try {
       if(!deleteId) return
