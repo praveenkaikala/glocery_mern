@@ -42,7 +42,7 @@ const Category = () => {
   // }, [reFetch]);
   useEffect(()=>{
     setCategoryData(category)
-  },[])
+  },[category])
   const handleDelete=async()=>{
     try {
       if(!deleteId) return

@@ -1,20 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoIosCloseCircle } from 'react-icons/io';
+import { useSelector } from 'react-redux';
 
 const UploadSubCategoryModel = ({close}) => {
  const [data, setData] = useState({
      name: "",
      image: "",
+     category:[]
    });
    const [loading, setLoading] = useState(false);
    const [categoryImage, setCategoryImage] = useState("");
+   const {category}=useSelector(state=>state?.product)
    const handleChange = (e) => {
+    const {name,value}=e.target
      setData((prev) => {
-       return {
-         ...prev,
-         [e.target.name]: e.target.value,
-       };
-     });
+        if (name === "category") {
+      return {
+        ...prev,
+        category: [...(prev.category || []), value],
+      };
+    }
+    return {
+      ...prev,
+      [name]: value,
+    };
+  });
    };
    const handleImageChange = (e) => {
      const image = e.target.files[0];
@@ -32,7 +42,7 @@ const UploadSubCategoryModel = ({close}) => {
      };
      reader.readAsDataURL(image);
    };
-   const validate = data.name.trim() !== "" && data.image instanceof File;
+   const validate = data.name.trim() !== "" && data.image instanceof File && data.category.length>0;
    const handleSubmit = async (e) => {
      e.preventDefault();
      if (!validate) {
@@ -56,6 +66,9 @@ const UploadSubCategoryModel = ({close}) => {
        setLoading(false);
      }
    };
+   useEffect(()=>{
+    console.log(data)
+   })
    return (
      <section className="fixed top-0 bottom-0 left-0 right-0 bg-neutral-900/60  p-4 flex  items-center justify-center ">
        <div className="bg-white max-w-sm w-full p-3 flex  flex-col rounded-sm">
@@ -106,6 +119,21 @@ const UploadSubCategoryModel = ({close}) => {
                id="name"
                name="name"
              />
+           </div>
+           <div className="grid gap-2">
+            <label htmlFor="category">Select Category</label>
+            <select className='bg-blue-50 py-1 px-2 outline-none ' id='category' name='category' onChange={handleChange}>
+                 <option value="" >Select category</option>
+                 {
+                    category.length>0 && category?.map((cat,ind)=>{
+                        return(
+                            <option value={cat?._id} key={ind} >
+                              {cat?.name}
+                            </option>
+                        )
+                    })
+                 }
+            </select>
            </div>
            <button
            type="submit"
