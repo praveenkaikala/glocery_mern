@@ -78,7 +78,7 @@ const UploadSubCategoryModel = ({ close }) => {
   });
   return (
     <section className="fixed top-0 bottom-0 left-0 right-0 bg-neutral-900/60  p-4 flex  items-center justify-center ">
-      <div className="bg-white max-w-md w-full p-3 flex  flex-col rounded-sm">
+      <div className="bg-white max-w-xl w-full p-3 flex  flex-col rounded-sm">
         <div className="w-full flex justify-between">
           <h2 className="font-semibold">Sub Category</h2>
           <IoIosCloseCircle
