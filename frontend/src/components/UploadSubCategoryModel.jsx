@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { summaryApi } from "../common/SummaryApi";
+import { toastSuccess } from "../utils/toastSuccess";
+import { toastError } from "../utils/toastError";
+import { AxiosPravite } from "../utils/Axios";
 
 const UploadSubCategoryModel = ({ close }) => {
   const [data, setData] = useState({
@@ -48,15 +52,18 @@ const UploadSubCategoryModel = ({ close }) => {
     }
     try {
       setLoading(true);
+     
+      const categoryIds=data?.category?.map((el)=>el._id)
+       console.log("calling")
       const formData = new FormData();
       formData.append("name", data?.name);
       formData.append("image", data?.image);
+      formData.append("category",JSON.stringify(categoryIds))
       const resp = await AxiosPravite({
-        ...summaryApi.createCategory,
+        ...summaryApi.createSubCategory,
         data: formData,
       });
       toastSuccess(resp?.data?.message);
-      setReFetch(!reFetch);
       close();
     } catch (error) {
       toastError(error?.response?.data?.message || "Category Creation Failed ");
