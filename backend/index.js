@@ -9,9 +9,10 @@ import userRouter from "./routes/user.routes.js"
 import categoryRouter from "./routes/category.routes.js"
 import subCategoryRouter from "./routes/subCategory.routes.js"
 import { connectDatabase } from "./utils/connectDB.js";
+const allowOrigins=[process.env.FRONTEND_URL_LOCAL,process.env.FRONTEND_URL_GLOBAL]
 app.use(cors({
     credentials:true,
-    origin:process.env.FRONTEND_URL
+    origin:allowOrigins
 }))
 app.use(cokkieparser())
 app.use(express.json())
