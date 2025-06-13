@@ -140,7 +140,7 @@ const UploadSubCategoryModel = ({ close }) => {
               {/*display value**/}
             
               <div className="flex flex-wrap gap-2 max-h-20 overflow-y-scroll">
-                {data.category.map((cat, index) => {
+                {data.category.map((cat) => {
                   return (
                     <p
                       key={cat._id + "selectedValue"}

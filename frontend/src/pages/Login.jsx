@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { toastSuccess } from "../utils/toastSuccess";

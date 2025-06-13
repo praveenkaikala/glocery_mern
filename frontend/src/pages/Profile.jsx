@@ -46,6 +46,7 @@ const Profile = () => {
       dispatch(updateUser(userdetails));
       toastSuccess(resp?.data?.message || "Detaills updated Successfully")
     } catch (error) {
+      console.log(error)
     toastError("Failed To Update")
     }
     finally{

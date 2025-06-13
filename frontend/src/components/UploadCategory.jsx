@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { AxiosPravite } from "../utils/Axios";
 import { summaryApi } from "../common/SummaryApi";

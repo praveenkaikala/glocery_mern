@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaEyeSlash } from "react-icons/fa";
@@ -50,7 +50,6 @@ const Register = () => {
     } catch (error) {
         toastError(error?.response?.data?.message || "Something Went Wrong")
     }
-    console.log(response)
   }
   return (
     <section className="container mx-auto w-full">

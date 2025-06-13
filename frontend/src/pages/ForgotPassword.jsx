@@ -9,7 +9,7 @@ const ForgotPassword = () => {
     const [userData, setUserData] = useState({
         email: ""
       });
-      const [showPassword,setShowPassword]=useState(false)
+      // const [showPassword,setShowPassword]=useState(false)
       const navigate=useNavigate()
       const handleChange = (e) => {
         setUserData({
@@ -17,9 +17,9 @@ const ForgotPassword = () => {
           [e.target.name]: e.target.value,
         });
       };
-      const handleShowPassword=()=>{
-        setShowPassword(!showPassword);
-      }
+      // const handleShowPassword=()=>{
+      //   setShowPassword(!showPassword);
+      // }
       const validate=Object.values(userData).every(el=>el)
     
       const handleSubmit=async (e)=>{

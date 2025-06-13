@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom"
 import "./index.css"
 import Header from "./components/Header"
-import Footer from "./components/Footer"
-import toast, { Toaster } from 'react-hot-toast';
 import { useEffect } from "react";
 import { fetchUserDatail } from "./utils/fetchUserdetails";
 import { useDispatch } from "react-redux";
@@ -10,7 +8,7 @@ import { setUser } from "./store/userSlice";
 import { setCategory } from "./store/productSlice";
 import { summaryApi } from "./common/SummaryApi";
 import { AxiosPravite } from "./utils/Axios";
-function App() {
+function  App() {
   const dispatch=useDispatch()
   const fetchUser = async () => {
     try {

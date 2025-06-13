@@ -8,6 +8,7 @@ const useFetchData = (urldata) => {
             const resp=await AxiosPravite({
                 ...urldata
             })
+            setData(resp.data)
             console.log(resp.data)
         } catch (error) {
             console.log(error)

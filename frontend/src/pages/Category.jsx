@@ -6,9 +6,9 @@ import SkeletonLoader from "../components/SkeletonLoader";
 import NoData from "../components/NoData";
 import EditCategory from "../components/EditCategory";
 import ConfirmBox from "../components/ConfirmBox";
-import toast from "react-hot-toast";
 import { toastSuccess } from "../utils/toastSuccess";
 import { useSelector } from "react-redux";
+import { toastError } from "../utils/toastError";
 
 const Category = () => {
   const [showUploadCategory, setShowUploadCategory] = useState(false);
@@ -24,22 +24,22 @@ const Category = () => {
   const [editModelOpen,setEditModelOpen]=useState(false);
   const [deleteModel,setDeleteModel]=useState(false)
   const [deleteId,setDeleteId]=useState("")
-  // const fetchCategoryList = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const resp = await AxiosPravite({
-  //       ...summaryApi.getCategotyList,
-  //     });
-  //     setCategoryData(resp?.data?.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetchCategoryList();
-  // }, [reFetch]);
+  const fetchCategoryList = async () => {
+    try {
+      setLoading(true);
+      // const resp = await AxiosPravite({
+      //   ...summaryApi.getCategotyList,
+      // });
+      // setCategoryData(resp?.data?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchCategoryList();
+  }, [reFetch]);
   useEffect(()=>{
     setCategoryData(category)
   },[category])
@@ -99,7 +99,7 @@ const Category = () => {
       )}
       {categoryData.length > 0 && !loading && (
        <div className='p-4 grid  grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2'>
-          {categoryData?.map((data, ind) => {
+          {categoryData?.map((data) => {
             return(
                         <div className='w-32 min-h-45 h-auto rounded shadow-md p-2 flex flex-col justify-between gap-2' key={data._id}>
                             <img 
