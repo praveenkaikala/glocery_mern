@@ -21,7 +21,7 @@ const useFetchData = (urldata) => {
     }
     useEffect(()=>{
         fetchData()
-    })
+    },[])
   return [data,loading];
 }
 
