@@ -63,5 +63,9 @@ export const summaryApi={
     createSubCategory:{
         url:"/api/user/create-subcategory",
         method:"post"
+    },
+     getSubCategory:{
+        url:"/api/user/get-subcategory",
+        method:"get"
     }
 }
