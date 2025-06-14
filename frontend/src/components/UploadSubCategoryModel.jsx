@@ -125,7 +125,7 @@ const UploadSubCategoryModel = ({ close }) => {
             />
           </div>
           <div className="grid gap-2">
-            <label htmlFor="name">Categoty Name</label>
+            <label htmlFor="name">SubCategoty Name</label>
             <input
               onChange={handleChange}
               value={data?.name}
