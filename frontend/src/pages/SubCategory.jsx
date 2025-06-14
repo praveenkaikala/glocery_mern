@@ -4,10 +4,44 @@ import useFetchData from "../hooks/useFetchData";
 import { summaryApi } from "../common/SummaryApi";
 import SkeletonLoader from "../components/SkeletonLoader";
 import NoData from "../components/NoData";
+import Category from "./Category";
+import ConfirmBox from "../components/ConfirmBox";
+import { toastError } from "../utils/toastError";
+import { toastSuccess } from "../utils/toastSuccess";
+import { AxiosPravite } from "../utils/Axios";
 
 const SubCategory = () => {
     const [showUploadSubCategory, setShowUploadSubCategory] = useState(false);
     const [subCategoryData,loading]=useFetchData(summaryApi.getSubCategory)
+     const [editModelOpen, setEditModelOpen] = useState(false);
+     const [deleteModel, setDeleteModel] = useState(false);
+     const [deleteId, setDeleteId] = useState("");
+      const [editData,setEditData]=useState({
+         id:"",
+         image:"",
+         name:"",
+         category:[]
+       })
+const handleDelete=async()=>{
+    try {
+      if(!deleteId) return
+      const resp=await AxiosPravite({
+        ...summaryApi.deleteSubCategoty,
+        data:{
+          id:deleteId
+        }
+      })
+      toastSuccess(resp?.data?.message)
+      
+      // fetchCategoryList()
+    } catch (error) {
+      console.log(error)
+       toastError(error?.response?.data?.message || "Category Deletion Failed");
+    }
+    finally{
+      setDeleteModel(false)
+    }
+  }
   return (
     <section>
       <div className="p-2 container bg-white shadow flex items-center gap-4">
@@ -61,6 +95,11 @@ const SubCategory = () => {
             )}
       {
         showUploadSubCategory && <UploadSubCategoryModel close={()=>setShowUploadSubCategory(false)}/>
+      }
+        {
+        deleteModel &&(
+          <ConfirmBox close={()=>setDeleteModel(false)} cancel={()=>setDeleteModel(false)} confirm={handleDelete}/>
+        )
       }
     </section>
   );

@@ -67,5 +67,9 @@ export const summaryApi={
      getSubCategory:{
         url:"/api/user/get-subcategory",
         method:"get"
-    }
+    },
+    deleteSubCategoty:{
+        url:"/api/user/delete-subcategory",
+        method:"delete"
+    },
 }
