@@ -40,3 +40,23 @@ export const createSubCategoryController=async(req,res)=>{
         })
     }
 }
+
+
+
+export const getSubCategoryController=async(req,res)=>{
+    try {
+        const subcategorys=await subCategoryModel.find();
+        return res.status(200).send({
+            message:"SubCategory List",
+            success:true,
+            error:false,
+            data:subcategorys
+        })
+    } catch (error) {
+         return res.status(500).send({
+            message:error.message || error,
+            success:false,
+            error:true
+        })
+    }
+}
