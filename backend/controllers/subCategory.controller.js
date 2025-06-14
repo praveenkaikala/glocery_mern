@@ -60,3 +60,32 @@ export const getSubCategoryController=async(req,res)=>{
         })
     }
 }
+
+
+export const DeleteSubCategoryController=async(req,res)=>{
+    try {
+       
+        const {id}=req.body;
+        const subCategory=await subCategoryModel.deleteOne({_id:id})
+        if(!subCategory)
+        {
+            return res.status(403).send({
+            message:"SubCategory Delation Failed",
+            success:false,
+            error:true
+            })
+        }
+        return  res.status(200).send({
+            message:"SubCategory Deleted",
+            success:true,
+            error:false
+            })
+
+    } catch (error) {
+        return res.status(500).send({
+            message:error.message || error,
+            success:false,
+            error:true
+        })
+    }
+}
