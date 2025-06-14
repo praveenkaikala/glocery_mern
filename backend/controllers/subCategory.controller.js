@@ -45,7 +45,7 @@ export const createSubCategoryController=async(req,res)=>{
 
 export const getSubCategoryController=async(req,res)=>{
     try {
-        const subcategorys=await subCategoryModel.find();
+        const subcategorys=await subCategoryModel.find().sort({createdAt:-1});
         return res.status(200).send({
             message:"SubCategory List",
             success:true,
