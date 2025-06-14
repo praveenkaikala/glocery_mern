@@ -4,6 +4,7 @@ import { AxiosPravite } from '../utils/Axios'
 const useFetchData = (urldata) => {
     const [data,setData]=useState([])
     const [loading,setLoading]=useState(false)
+    const [refresh,setRefresh]=useState(false)
     const fetchData=async()=>{
         try {
             setLoading(true)
@@ -11,7 +12,7 @@ const useFetchData = (urldata) => {
                 ...urldata
             })
             setData(resp?.data?.data)
-            console.log(resp.data)
+            // console.log(resp.data)
         } catch (error) {
             console.log(error)
         }
@@ -21,8 +22,8 @@ const useFetchData = (urldata) => {
     }
     useEffect(()=>{
         fetchData()
-    },[])
-  return [data,loading];
+    },[refresh])
+  return [data,loading,refresh,setRefresh];
 }
 
 export default useFetchData

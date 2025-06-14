@@ -12,7 +12,7 @@ import { AxiosPravite } from "../utils/Axios";
 
 const SubCategory = () => {
     const [showUploadSubCategory, setShowUploadSubCategory] = useState(false);
-    const [subCategoryData,loading]=useFetchData(summaryApi.getSubCategory)
+    const [subCategoryData,loading,refresh,setRefresh]=useFetchData(summaryApi.getSubCategory)
      const [editModelOpen, setEditModelOpen] = useState(false);
      const [deleteModel, setDeleteModel] = useState(false);
      const [deleteId, setDeleteId] = useState("");
@@ -32,7 +32,7 @@ const handleDelete=async()=>{
         }
       })
       toastSuccess(resp?.data?.message)
-      
+      setRefresh(!refresh)
       // fetchCategoryList()
     } catch (error) {
       console.log(error)
@@ -94,7 +94,7 @@ const handleDelete=async()=>{
               </div>
             )}
       {
-        showUploadSubCategory && <UploadSubCategoryModel close={()=>setShowUploadSubCategory(false)}/>
+        showUploadSubCategory && <UploadSubCategoryModel close={()=>setShowUploadSubCategory(false)} refresh={()=>setRefresh(!refresh)} />
       }
         {
         deleteModel &&(

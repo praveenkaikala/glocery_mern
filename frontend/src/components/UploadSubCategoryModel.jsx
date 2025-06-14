@@ -7,7 +7,7 @@ import { toastSuccess } from "../utils/toastSuccess";
 import { toastError } from "../utils/toastError";
 import { AxiosPravite } from "../utils/Axios";
 
-const UploadSubCategoryModel = ({ close }) => {
+const UploadSubCategoryModel = ({ close,refresh }) => {
   const [data, setData] = useState({
     name: "",
     image: "",
@@ -64,6 +64,7 @@ const UploadSubCategoryModel = ({ close }) => {
         data: formData,
       });
       toastSuccess(resp?.data?.message);
+      refresh()
       close();
     } catch (error) {
       toastError(error?.response?.data?.message || "Category Creation Failed ");
