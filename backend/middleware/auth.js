@@ -13,7 +13,7 @@ export const authMiddleware = async (req,res,next) => {
             message:"provide token"
         }) 
     }
-    const verify =await jwt.verify(token,process.env.SECRET_KEY)
+    const verify = jwt.verify(token,process.env.SECRET_KEY)
     if(!verify)
     {
         return res.status(401).send({
@@ -27,11 +27,25 @@ export const authMiddleware = async (req,res,next) => {
     next()
     
   } catch (error) {
-    console.error(error);
-    return res.status(500).send({
-        success:false,
-        error:true,
-        message:error.message || error
-    })
+   if (error.name === "TokenExpiredError") {
+      return res.status(401).json({
+        success: false,
+        error: true,
+        message: "Token expired",
+      });
+    }
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({
+        success: false,
+        error: true,
+        message: "Invalid token",
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      error: true,
+      message: error.message || "Internal server error",
+    });
   }
 };

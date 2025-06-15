@@ -410,7 +410,10 @@ export const refreshToken = async (req,res) => {
     return res.status(200).send({
         message:"new access token generated",
         error:false,
-        success:true
+        success:true,
+        data:{
+            accessToken
+        }
     })
   } catch (error) {
     return res.status(500).send({

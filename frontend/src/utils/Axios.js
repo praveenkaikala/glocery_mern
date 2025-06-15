@@ -26,7 +26,7 @@ AxiosPravite.interceptors.response.use((response)=>{
     {
         originalConfig._retry=true
         try {
-            const response=await axios.get(`${baseApiUrl}/refresh`,{withCredentials:true})
+            const response=await axios.get(`${baseApiUrl}/api/user/refresh-token`,{withCredentials:true})
             localStorage.setItem("accesstoken",response?.data?.data?.accessToken)
             return AxiosPravite(originalConfig)
         } catch (error) {
