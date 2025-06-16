@@ -9,7 +9,11 @@ import ConfirmBox from "../components/ConfirmBox";
 import { toastError } from "../utils/toastError";
 import { toastSuccess } from "../utils/toastSuccess";
 import { AxiosPravite } from "../utils/Axios";
-
+import { createColumnHelper } from "@tanstack/react-table";
+import DisplayTable from "../components/Table";
+import { LuPencil } from "react-icons/lu";
+import { MdDelete  } from "react-icons/md";
+import { HiPencil } from "react-icons/hi";
 const SubCategory = () => {
     const [showUploadSubCategory, setShowUploadSubCategory] = useState(false);
     const [subCategoryData,loading,refresh,setRefresh]=useFetchData(summaryApi.getSubCategory)
@@ -22,6 +26,7 @@ const SubCategory = () => {
          name:"",
          category:[]
        })
+        const columnHelper = createColumnHelper()
 const handleDelete=async()=>{
     try {
       if(!deleteId) return
@@ -42,6 +47,65 @@ const handleDelete=async()=>{
       setDeleteModel(false)
     }
   }
+
+   const column = [
+    columnHelper.accessor('name',{
+      header : "Name"
+    }),
+    columnHelper.accessor('image',{
+      header : "Image",
+      cell : ({row})=>{
+        console.log("row",)
+        return <div className='flex justify-center items-center'>
+            <img 
+                src={row.original.image}
+                alt={row.original.name}
+                className='w-8 h-8 cursor-pointer'
+                onClick={()=>{
+                  setImageURL(row.original.image)
+                }}      
+            />
+        </div>
+      }
+    }),
+    columnHelper.accessor("category",{
+       header : "Category",
+       cell : ({row})=>{
+        return(
+          <>
+            {
+              row.original.categoryId.map((c,index)=>{
+                return(
+                  <p key={c._id+"table"} className='shadow-md px-1 inline-block'>{c}</p>
+                )
+              })
+            }
+          </>
+        )
+       }
+    }),
+    columnHelper.accessor("_id",{
+      header : "Action",
+      cell : ({row})=>{
+        return(
+          <div className='flex items-center justify-center gap-3'>
+              <button onClick={()=>{
+                  setOpenEdit(true)
+                  setEditData(row.original)
+              }} className='p-2 bg-green-100 rounded-full hover:text-green-600'>
+                  <HiPencil size={20}/>
+              </button>
+              <button onClick={()=>{
+                setOpenDeleteConfirmBox(true)
+                setDeleteSubCategory(row.original)
+              }} className='p-2 bg-red-100 rounded-full text-red-500 hover:text-red-600'>
+                  <MdDelete  size={20}/>
+              </button>
+          </div>
+        )
+      }
+    })
+  ]
   return (
     <section>
       <div className="p-2 container bg-white shadow flex items-center gap-4">
@@ -53,36 +117,12 @@ const handleDelete=async()=>{
           Add SubCategory
         </button>
       </div>
-         {subCategoryData.length > 0 && !loading && (
-       <div className='p-4 grid  grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2'>
-          {subCategoryData?.map((data) => {
-            return(
-                        <div className='w-32 min-h-45 h-auto rounded shadow-md p-2 flex flex-col justify-between gap-2' key={data._id}>
-                            <img 
-                                alt={data.name}
-                                src={data.image}
-                                className='w-full h-23 object-scale-down'
-                            />
-                            <p className=" text-center ">{data?.name}</p>
-                            <div className='items-center h-9 flex gap-2'>
-                                <button onClick={()=>{
-                                   setEditModelOpen(true)
-                                    setEditData(data)
-                                }} className='flex-1 cursor-pointer bg-green-100 hover:bg-green-200 text-green-600 font-medium py-1 px-2 rounded'>
-                                    Edit
-                                </button>
-                                <button onClick={()=>{
-                                   setDeleteId(data?._id)
-                                   setDeleteModel(true)
-                                }} className='flex-1 cursor-pointer bg-red-100 hover:bg-red-200 text-red-600 font-medium py-1 px-2 rounded'>
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    )
-          })}
+       <div className='overflow-auto w-full max-w-[95vw]'>
+            <DisplayTable
+                data={subCategoryData}
+                column={column}
+            />
         </div>
-      )}
       {loading && (
               <div className="w-full h-[60vh] grid gap-3 py-3 overflow-y-hidden">
                 <SkeletonLoader />
