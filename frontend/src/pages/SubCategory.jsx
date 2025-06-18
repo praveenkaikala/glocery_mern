@@ -55,7 +55,6 @@ const handleDelete=async()=>{
     columnHelper.accessor('image',{
       header : "Image",
       cell : ({row})=>{
-        console.log("row",)
         return <div className='flex justify-center items-center'>
             <img 
                 src={row.original.image}
@@ -96,8 +95,8 @@ const handleDelete=async()=>{
                   <HiPencil size={20}/>
               </button>
               <button onClick={()=>{
-                setOpenDeleteConfirmBox(true)
-                setDeleteSubCategory(row.original)
+                setDeleteModel(true)
+                setDeleteId(row?.original?._id)
               }} className='p-2 bg-red-100 rounded-full text-red-500 hover:text-red-600'>
                   <MdDelete  size={20}/>
               </button>
