@@ -142,7 +142,7 @@ const handleDelete=async()=>{
         )
       }
       {
-        editModelOpen && <EditSubCategory data={editData}/>
+        editModelOpen && <EditSubCategory editData={editData} close={()=>setEditModelOpen(false)} setEditData={setEditData}/>
       } 
     </section>
   );
