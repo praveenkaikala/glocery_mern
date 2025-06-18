@@ -89,7 +89,7 @@ const handleDelete=async()=>{
         return(
           <div className='flex items-center justify-center gap-3'>
               <button onClick={()=>{
-                  setOpenEdit(true)
+                  setEditModelOpen(true)
                   setEditData(row.original)
               }} className='p-2 bg-green-100 rounded-full hover:text-green-600'>
                   <HiPencil size={20}/>
