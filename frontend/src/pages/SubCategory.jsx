@@ -14,6 +14,7 @@ import DisplayTable from "../components/Table";
 import { LuPencil } from "react-icons/lu";
 import { MdDelete  } from "react-icons/md";
 import { HiPencil } from "react-icons/hi";
+import EditSubCategory from "../components/EditSubCategory";
 const SubCategory = () => {
     const [showUploadSubCategory, setShowUploadSubCategory] = useState(false);
     const [subCategoryData,loading,refresh,setRefresh]=useFetchData(summaryApi.getSubCategory)
@@ -140,6 +141,9 @@ const handleDelete=async()=>{
           <ConfirmBox close={()=>setDeleteModel(false)} cancel={()=>setDeleteModel(false)} confirm={handleDelete}/>
         )
       }
+      {
+        editModelOpen && <EditSubCategory data={editData}/>
+      } 
     </section>
   );
 };
