@@ -72,4 +72,8 @@ export const summaryApi={
         url:"/api/user/delete-subcategory",
         method:"delete"
     },
+    updateSubCategory:{
+        url:"/api/user/update-subcategory",
+        method:"put"
+    }
 }

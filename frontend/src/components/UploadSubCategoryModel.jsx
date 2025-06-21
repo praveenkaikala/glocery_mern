@@ -104,7 +104,7 @@ const UploadSubCategoryModel = ({ close,refresh }) => {
                   <img
                     src={categoryImage}
                     alt={data?.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-scale-down"
                     loading="lazy"
                   />
                 ) : (

@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoIosCloseCircle } from 'react-icons/io'
 import { IoClose } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
+import { summaryApi } from '../common/SummaryApi';
+import { AxiosPravite } from '../utils/Axios';
+import { toastSuccess } from '../utils/toastSuccess';
+import { toastError } from '../utils/toastError';
 
 const EditSubCategory = ({editData,close,setEditData}) => {
     const [loading, setLoading] = useState(false);
@@ -23,7 +27,7 @@ const EditSubCategory = ({editData,close,setEditData}) => {
         };
         reader.readAsDataURL(image);
       };
-      const validate = editData.name.trim() !== "" && editData.image instanceof File;
+      const validate = editData.name.trim() !== "" && editData.image instanceof File && editData.categoryId.length>0;
       const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validate) {
@@ -35,12 +39,16 @@ const EditSubCategory = ({editData,close,setEditData}) => {
           formData.append("name", editData?.name);
           formData.append("image", editData?.image);
            formData.append("id", editData?._id);
+           const ids=editData?.categoryId.map((cat)=>{
+            return cat?._id;
+           })
+            formData.append("categoryId", JSON.stringify(ids));
           const resp = await AxiosPravite({
-            ...summaryApi.updateCategory,
+            ...summaryApi.updateSubCategory,
             data: formData,
           });
           toastSuccess(resp?.data?.message);
-          setReFetch(!reFetch)
+          // setReFetch(!reFetch)
           close();
         } catch (error) {
           toastError(error?.response?.data?.message || "Category Creation Failed ");
@@ -50,13 +58,22 @@ const EditSubCategory = ({editData,close,setEditData}) => {
       };
        const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => {
+    setEditData((prev) => {
       return {
         ...prev,
         [name]: value,
       };
     });
   };
+  const handleRemoveCategorySelected=(id)=>{
+    const filterCategory=editData.categoryId.filter(el=>el._id!=id)
+    setEditData((prev)=>{
+        return {
+            ...prev,
+            categoryId:filterCategory
+        }
+    })
+  }
   return (
    <section className="fixed top-0 bottom-0 left-0 right-0 bg-neutral-900/60  p-4 flex  items-center justify-center ">
         <div className="bg-white max-w-xl w-full p-3 flex  flex-col rounded-sm">
@@ -75,7 +92,7 @@ const EditSubCategory = ({editData,close,setEditData}) => {
                 <div className="w-36 h-36 bg-blue-50 flex items-center justify-center rounded">
                   {categoryImage ? (
                     <img
-                      src={editData?.image}
+                      src={categoryImage}
                       alt={editData?.name}
                       className="w-full h-full object-scale-down"
                       loading="lazy"
@@ -139,12 +156,12 @@ const EditSubCategory = ({editData,close,setEditData}) => {
                 onChange={(e)=>{
                                       const value = e.target.value
                                       const categoryDetails = category.find(el => el._id == value)
-                                      const isexist=editData.category.find(el => el._id == value)
+                                      const isexist=editData.categoryId.find(el => el._id == value)
                                       if(isexist) return
-                                      setData((preve)=>{
+                                      setEditData((preve)=>{
                                           return{
                                               ...preve,
-                                              category : [...preve.category,categoryDetails]
+                                              categoryId : [...preve.categoryId,categoryDetails]
                                           }
                                       })
                                   }}
