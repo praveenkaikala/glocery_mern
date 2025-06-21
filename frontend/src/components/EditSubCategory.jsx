@@ -7,7 +7,7 @@ import { AxiosPravite } from '../utils/Axios';
 import { toastSuccess } from '../utils/toastSuccess';
 import { toastError } from '../utils/toastError';
 
-const EditSubCategory = ({editData,close,setEditData}) => {
+const EditSubCategory = ({editData,close,setEditData,refresh}) => {
     const [loading, setLoading] = useState(false);
     const { category } = useSelector((state) => state?.product);
       const [categoryImage, setCategoryImage] = useState(editData?.image);
@@ -48,7 +48,7 @@ const EditSubCategory = ({editData,close,setEditData}) => {
             data: formData,
           });
           toastSuccess(resp?.data?.message);
-          // setReFetch(!reFetch)
+          refresh()
           close();
         } catch (error) {
           toastError(error?.response?.data?.message || "Category Creation Failed ");
