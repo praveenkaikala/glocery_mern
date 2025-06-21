@@ -1,4 +1,4 @@
-const mongoose=require('mongoose')
+import mongoose from "mongoose"
 
 const productSchema=mongoose.Schema({
    name:
@@ -15,7 +15,7 @@ const productSchema=mongoose.Schema({
         ref:"category"
     }
    ],
-   sub_category:[
+   subcategory:[
     {
         type:mongoose.Schema.ObjectId,
         ref:"subcategory"
@@ -23,7 +23,7 @@ const productSchema=mongoose.Schema({
    ],
    unit:{
     type:String,
-    default:null
+    default:""
    },
    stock:{
     type:Number,
@@ -39,7 +39,7 @@ const productSchema=mongoose.Schema({
    },
    discription:{
     
-        type:string,
+        type:String,
         default:""
     
    },
