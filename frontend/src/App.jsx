@@ -34,10 +34,10 @@ function  App() {
          const respo=await AxiosPravite({
           ...summaryApi.getSubCategory
          })
-         if(resp.data.data.length>0)
+         if(respo.data.data.length>0)
          {
           console.log("calling category reducer")
-          dispatch(setSubCategory(resp.data.data))
+          dispatch(setSubCategory(respo.data.data))
          }
        } catch (error) {
          console.log(error);
