@@ -6,8 +6,8 @@ const productSchema=mongoose.Schema({
     type:String
    },
    image:{
-    type:Array,
-    default:[]
+    type:String,
+    default:""
    },
    category:[
     {
