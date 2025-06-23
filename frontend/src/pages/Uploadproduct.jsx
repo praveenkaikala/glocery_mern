@@ -12,7 +12,7 @@ export const Uploadproduct = () => {
     discount:null,
     discription:"",
     more_details:"",
-    publish
+    publish:true
   })
   return (
      <section>
