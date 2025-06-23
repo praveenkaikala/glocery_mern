@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { fetchUserDatail } from "./utils/fetchUserdetails";
 import { useDispatch } from "react-redux";
 import { setUser } from "./store/userSlice";
-import { setCategory } from "./store/productSlice";
+import { setCategory, setSubCategory } from "./store/productSlice";
 import { summaryApi } from "./common/SummaryApi";
 import { AxiosPravite } from "./utils/Axios";
 function  App() {
@@ -30,6 +30,14 @@ function  App() {
          {
           console.log("calling category reducer")
           dispatch(setCategory(resp.data.data))
+         }
+         const respo=await AxiosPravite({
+          ...summaryApi.getSubCategory
+         })
+         if(resp.data.data.length>0)
+         {
+          console.log("calling category reducer")
+          dispatch(setSubCategory(resp.data.data))
          }
        } catch (error) {
          console.log(error);
