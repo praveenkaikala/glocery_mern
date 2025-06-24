@@ -3,6 +3,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
 import AddFields from "../components/AddFields";
+import { MdDelete } from "react-icons/md";
 export const Uploadproduct = () => {
   const category = useSelector((state) => state?.product?.category);
   const subCategory = useSelector((state) => state?.product?.subCategory);
@@ -79,6 +80,19 @@ export const Uploadproduct = () => {
       }
     })
   }
+ const handleDeleteField = (name) => {
+  const updatedFields = fields.filter((el) => el !== name);
+  setfields(updatedFields);
+
+  setData((prev) => {
+    const updatedDetails = { ...prev.more_details };
+    delete updatedDetails[name];
+    return {
+      ...prev,
+      more_details: updatedDetails,
+    };
+  });
+};
   return (
     <section>
       <div className="p-2 container bg-white shadow flex items-center gap-4">
@@ -302,7 +316,10 @@ export const Uploadproduct = () => {
               fields.map((el,ind)=>{
                 return (
                    <div className="grid gap-2" key={ind}>
-            <label htmlFor={el}>{el}</label>
+            <div className="flex justify-between">
+               <label htmlFor={el}>{el}</label>
+                  <MdDelete size={20} className="cursor-pointer hover:text-red-700" onClick={()=>handleDeleteField(el)}/>
+            </div>
             <input
               type="text"
               // value={data.unit}
