@@ -33,7 +33,7 @@ const productSchema=mongoose.Schema({
     type:Number,
     default:null
    },
-   dicount:{
+   discount:{
     type:Number,
     default:null
    },

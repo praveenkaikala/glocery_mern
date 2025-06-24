@@ -8,6 +8,7 @@ import cokkieparser from "cookie-parser"
 import userRouter from "./routes/user.routes.js"
 import categoryRouter from "./routes/category.routes.js"
 import subCategoryRouter from "./routes/subCategory.routes.js"
+import productRoutes from "./routes/product.routes.js"
 import { connectDatabase } from "./utils/connectDB.js";
 const allowOrigins=[process.env.FRONTEND_URL_LOCAL,process.env.FRONTEND_URL_GLOBAL]
 app.use(cors({
@@ -22,6 +23,7 @@ app.get("/",(req,res)=>{
 app.use("/api/user",userRouter)
 app.use("/api/user",categoryRouter)
 app.use("/api/user",subCategoryRouter)
+app.use("/api/user",productRoutes)
 app.use(helmet({
     crossOriginResourcePolicy:false
 }))
