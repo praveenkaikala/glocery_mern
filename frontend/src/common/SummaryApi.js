@@ -75,5 +75,9 @@ export const summaryApi={
     updateSubCategory:{
         url:"/api/user/update-subcategory",
         method:"put"
+    },
+    uploadProduct:{
+        url:"/api/user/product",
+        method:"post"
     }
 }

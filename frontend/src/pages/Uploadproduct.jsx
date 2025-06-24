@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
 import AddFields from "../components/AddFields";
 import { MdDelete } from "react-icons/md";
+import { AxiosPravite } from "../utils/Axios";
+import { summaryApi } from "../common/SummaryApi";
 export const Uploadproduct = () => {
   const category = useSelector((state) => state?.product?.category);
   const subCategory = useSelector((state) => state?.product?.subCategory);
@@ -93,13 +95,48 @@ export const Uploadproduct = () => {
     };
   });
 };
+const handleSubmit=async(e)=>{
+  e.preventDefault();
+  try {
+    const categoryIds=data?.category.map((el)=>el._id)
+     const subCategoryIds=data?.subcategory.map((el)=>el._id)
+     const formData=new FormData();
+     formData.append("name",data.name);
+     formData.append("image",data.image);
+     formData.append("category",JSON.stringify(categoryIds));
+     formData.append("subcategory",JSON.stringify(subCategoryIds));
+     formData.append("unit",data.unit);
+     formData.append("price",data.price);
+     formData.append("discount",data.discount);
+     formData.append("discription",data.discription);
+     formData.append("more_details",JSON.stringify(data.more_details));
+     formData.append("publish",data.publish);
+     formData.append("stock",data.stock);
+    const resp=await AxiosPravite({
+      ...summaryApi.uploadProduct,
+      data:formData
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+const handleNewFieldChange=(e)=>{
+  const name=e.target.name;
+  const value=e.target.value
+  setData((prev)=>{
+    return {
+      ...prev,
+      more_details:{...prev.more_details,[name]:value}
+    }
+  })
+}
   return (
     <section>
       <div className="p-2 container bg-white shadow flex items-center gap-4">
         <h2 className="font-semibold">Upload Product</h2>
       </div>
       <div className="p-3">
-        <form className="grid gap-4">
+        <form className="grid gap-4" onSubmit={handleSubmit}>
           <div className="grid gap-2">
             <label htmlFor="name">Name</label>
             <input
@@ -276,7 +313,7 @@ export const Uploadproduct = () => {
             <label htmlFor="stock">Stock</label>
             <input
               type="number"
-              value={data.unit}
+              value={data.stock}
               onChange={handleChange}
               className="bg-blue-50 outline-none border rounded focus-within:border-amber-300 py-1 px-2 resize-none"
               id="stock"
@@ -289,7 +326,7 @@ export const Uploadproduct = () => {
             <label htmlFor="price">Price</label>
             <input
               type="number"
-              value={data.unit}
+              value={data.price}
               onChange={handleChange}
               className="bg-blue-50 outline-none border rounded focus-within:border-amber-300 py-1 px-2 resize-none"
               id="price"
@@ -302,7 +339,7 @@ export const Uploadproduct = () => {
             <label htmlFor="discount">Discount</label>
             <input
               type="number"
-              value={data.unit}
+              value={data.discount}
               onChange={handleChange}
               className="bg-blue-50 outline-none border rounded focus-within:border-amber-300 py-1 px-2 resize-none"
               id="discount"
@@ -322,8 +359,8 @@ export const Uploadproduct = () => {
             </div>
             <input
               type="text"
-              // value={data.unit}
-              // onChange={handleChange}
+              value={data?.more_details?.el}
+              onChange={handleNewFieldChange}
               className="bg-blue-50 outline-none border rounded focus-within:border-amber-300 py-1 px-2 resize-none"
               id={el}
               name={el}
@@ -338,6 +375,7 @@ export const Uploadproduct = () => {
           <div className="inline-block bg-amber-300 hover:bg-white w-32 px-3 py-1 border rounded cursor-pointer font-semibold text-center" onClick={()=>setModelOpen(true)}>
               add fileds
           </div>
+          <button type="submit">add product</button>
         </form>
       </div>
       {
