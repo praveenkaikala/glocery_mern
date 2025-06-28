@@ -49,3 +49,22 @@ export const uploadProductController=async(req,res)=>{
         })
     }
 }
+
+
+export const getAllProductsController=async(req,res)=>{
+    try {
+        const products=await productModel.find().sort({createdAt:-1});
+        return res.status(200).send({
+            message:"priduct list",
+            success:true,
+            error:false,
+            data:products
+        })
+    } catch (error) {
+        return res.status(500).send({
+            message:error.message || error,
+            success:false,
+            error:true
+        })
+    }
+}
