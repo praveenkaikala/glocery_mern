@@ -8,5 +8,5 @@ const router=express.Router()
 
 
 router.post("/product",authMiddleware,adminAuth,upload.single("image"),uploadProductController)
-router.get("/product",authMiddleware,getAllProductsController);
+router.post("/get-product",authMiddleware,getAllProductsController);
 export default router

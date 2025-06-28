@@ -79,5 +79,14 @@ export const summaryApi={
     uploadProduct:{
         url:"/api/user/product",
         method:"post"
+    },
+    getAllProducts:(page=1,limit=10,search="")=>{
+        return {
+             url:"/api/user/get-product",
+             method:"post",
+             data:{
+                page,limit,search
+             }
+        }
     }
 }

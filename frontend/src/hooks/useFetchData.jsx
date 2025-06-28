@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AxiosPravite } from '../utils/Axios'
 
-const useFetchData = (urldata) => {
+const useFetchData = (urldata,dep=[]) => {
     const [data,setData]=useState([])
     const [loading,setLoading]=useState(false)
     const [refresh,setRefresh]=useState(false)
@@ -22,7 +22,7 @@ const useFetchData = (urldata) => {
     }
     useEffect(()=>{
         fetchData()
-    },[refresh])
+    },[refresh,...dep])
   return [data,loading,refresh,setRefresh];
 }
 
