@@ -51,20 +51,45 @@ export const uploadProductController=async(req,res)=>{
 }
 
 
-export const getAllProductsController=async(req,res)=>{
+export const getAllProductsController = async(request,response)=>{
     try {
-        const products=await productModel.find().sort({createdAt:-1});
-        return res.status(200).send({
-            message:"priduct list",
-            success:true,
-            error:false,
-            data:products
+        
+        let { page, limit, search } = request.body 
+
+        if(!page){
+            page = 1
+        }
+
+        if(!limit){
+            limit = 10
+        }
+
+        const query = search ? {
+            $text : {
+                $search : search
+            }
+        } : {}
+
+        const skip = (page - 1) * limit
+
+        const [data,totalCount] = await Promise.all([
+            productModel.find(query).sort({createdAt : -1 }).skip(skip).limit(limit).populate('category subCategory'),
+            productModel.countDocuments(query)
+        ])
+
+        return response.json({
+            message : "Product data",
+            error : false,
+            success : true,
+            totalCount : totalCount,
+            totalNoPage : Math.ceil( totalCount / limit),
+            data : data
         })
     } catch (error) {
-        return res.status(500).send({
-            message:error.message || error,
-            success:false,
-            error:true
+        return response.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
         })
     }
 }
