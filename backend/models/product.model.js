@@ -54,6 +54,13 @@ const productSchema=mongoose.Schema({
 },{
     timestamps:true
 })
+productSchema.index({
+    name  : "text",
+    discription : 'text'
+},{weights:{
+    name : 10,
+    discription : 5
+}})
 
 const productModel=mongoose.model("product",productSchema);
 export default productModel 
