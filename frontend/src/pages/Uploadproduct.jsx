@@ -6,6 +6,8 @@ import AddFields from "../components/AddFields";
 import { MdDelete } from "react-icons/md";
 import { AxiosPravite } from "../utils/Axios";
 import { summaryApi } from "../common/SummaryApi";
+import { toastSuccess } from "../utils/toastSuccess";
+import { toastError } from "../utils/toastError";
 export const Uploadproduct = () => {
   const category = useSelector((state) => state?.product?.category);
   const subCategory = useSelector((state) => state?.product?.subCategory);
@@ -115,9 +117,24 @@ const handleSubmit=async(e)=>{
     const resp=await AxiosPravite({
       ...summaryApi.uploadProduct,
       data:formData
+    }) 
+    toastSuccess(resp.data.message || "Product Created Successfully")
+    setData({
+       name: "",
+    image: "",
+    category: [],
+    subcategory: [],
+    unit: "",
+    stock: null,
+    price: null,
+    discount: null,
+    discription: "",
+    more_details: {},
+    publish: true,
     })
+    setImage("")
   } catch (error) {
-    console.log(error)
+    toastError(error.message || "Product Creation Failed")
   }
 }
 const handleNewFieldChange=(e)=>{
