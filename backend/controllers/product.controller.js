@@ -93,3 +93,9 @@ export const getAllProductsController = async(request,response)=>{
         })
     }
 }
+
+
+
+export const getProductDetail=async(req,res)=>{
+
+}
