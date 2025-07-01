@@ -1,16 +1,8 @@
-import React, { useState } from 'react'
-import useFetchData from '../hooks/useFetchData'
-import { summaryApi } from '../common/SummaryApi'
+import React from 'react'
 
-const Product = () => { 
-  const [set,setSet]=useState(1)
-  const [products]=useFetchData(summaryApi.getAllProducts(set),[set])
-  console.log(products)
+const Product = () => {
   return (
-    <div onClick={()=>{
-      console.log("state")
-      setSet((prev)=>prev+1)
-    }}>Product</div>
+    <div>Product</div>
   )
 }
 
