@@ -19,6 +19,34 @@ const AdminProduct = () => {
         setProducts(productData?.data || [])
         setTotalPages(productData?.totalNoPage)
       },[productData])
+
+      const handleNext = ()=>{
+    if(perams.page !== totalpages){
+      setPerams((preve) => {
+        return {
+          ...preve,
+          page: preve.page + 1,
+        };
+      });
+    }
+  }
+  const handlePrevious = () => {
+    if (perams.page > 1) {
+      setPerams((preve) => {
+        return {
+          ...preve,
+          page: preve.page - 1,
+        };
+      });
+    }
+  };
+
+//   const handleOnChange = (e)=>{
+//     const { value } = e.target
+//     setSearch(value)
+//     setPage(1)
+//   }
+
   return (
    <section className=''>
         <div className='p-2  bg-white shadow-md flex items-center justify-between gap-4'>
@@ -41,7 +69,9 @@ const AdminProduct = () => {
         }
 
 
-        <div className='p-4 bg-blue-50'>
+       {
+        !loading &&
+         <div className='p-4 bg-blue-50'>
 
 
             <div className='min-h-[55vh]'>
@@ -55,14 +85,15 @@ const AdminProduct = () => {
                 }
               </div>
             </div>
+            </div>
+       }
             
-            {/* <div className='flex justify-between my-4'>
+            <div className='flex justify-between my-4'>
               <button onClick={handlePrevious} className="border border-primary-200 px-4 py-1 hover:bg-primary-200">Previous</button>
-              <button className='w-full bg-slate-100'>{page}/{totalPageCount}</button>
+              <button className='w-full bg-slate-100'>{perams.page}/{totalpages}</button>
               <button onClick={handleNext} className="border border-primary-200 px-4 py-1 hover:bg-primary-200">Next</button>
-            </div> */}
+            </div>
 
-        </div>
           
 
       
