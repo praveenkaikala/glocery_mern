@@ -17,9 +17,9 @@ export const Uploadproduct = () => {
     category: [],
     subcategory: [],
     unit: "",
-    stock: null,
-    price: null,
-    discount: null,
+    stock: "",
+    price: "",
+    discount: "",
     discription: "",
     more_details: {},
     publish: true,
@@ -126,14 +126,15 @@ const handleSubmit=async(e)=>{
     image: "",
     category: [],
     subcategory: [],
-    unit: "",
-    stock: null,
-    price: null,
-    discount: null,
+     unit: "",
+    stock: "",
+    price: "",
+    discount: "",
     discription: "",
     more_details: {},
     publish: true,
     })
+    setfields([])
     setImage("")
   } catch (error) {
     toastError(error.message || "Product Creation Failed")
