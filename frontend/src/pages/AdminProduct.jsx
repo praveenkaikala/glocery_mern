@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useFetchData from '../hooks/useFetchData'
 import { summaryApi } from '../common/SummaryApi'
 import { IoSearchOutline } from 'react-icons/io5'
@@ -11,8 +11,14 @@ const AdminProduct = () => {
         limit:10,
         search:""
       })
-      const [products,loading,refetchData]=useFetchData(summaryApi.getAllProducts(perams),[perams])
+      const [products,setProducts]=useState([])
+      const [totalpages,setTotalPages]=useState(0)
+      const [productData,loading,refetchData]=useFetchData(summaryApi.getAllProducts(perams),[perams])
       console.log(products)
+      useEffect(()=>{
+        setProducts(productData?.data || [])
+        setTotalPages(productData?.totalNoPage)
+      },[productData])
   return (
    <section className=''>
         <div className='p-2  bg-white shadow-md flex items-center justify-between gap-4'>

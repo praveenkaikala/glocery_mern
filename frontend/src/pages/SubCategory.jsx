@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UploadSubCategoryModel from "../components/UploadSubCategoryModel";
 import useFetchData from "../hooks/useFetchData";
 import { summaryApi } from "../common/SummaryApi";
@@ -17,7 +17,11 @@ import { HiPencil } from "react-icons/hi";
 import EditSubCategory from "../components/EditSubCategory";
 const SubCategory = () => {
     const [showUploadSubCategory, setShowUploadSubCategory] = useState(false);
-    const [subCategoryData,loading,refresh,setRefresh]=useFetchData(summaryApi.getSubCategory)
+    const [data,loading,refetch]=useFetchData(summaryApi.getSubCategory)
+    const [subCategoryData,setSubCategoryData]=useState([])
+    useEffect(()=>{
+      setSubCategoryData(data?.data || [])
+    })
      const [editModelOpen, setEditModelOpen] = useState(false);
      const [deleteModel, setDeleteModel] = useState(false);
      const [deleteId, setDeleteId] = useState("");
@@ -134,7 +138,7 @@ const handleDelete=async()=>{
               </div>
             )}
       {
-        showUploadSubCategory && <UploadSubCategoryModel close={()=>setShowUploadSubCategory(false)} refresh={()=>setRefresh(!refresh)} />
+        showUploadSubCategory && <UploadSubCategoryModel close={()=>setShowUploadSubCategory(false)} refresh={refetch} />
       }
         {
         deleteModel &&(
@@ -142,7 +146,7 @@ const handleDelete=async()=>{
         )
       }
       {
-        editModelOpen && <EditSubCategory editData={editData} close={()=>setEditModelOpen(false)} setEditData={setEditData} refresh={()=>setRefresh(!refresh)}/>
+        editModelOpen && <EditSubCategory editData={editData} close={()=>setEditModelOpen(false)} setEditData={setEditData} refresh={refetch}/>
       } 
     </section>
   );

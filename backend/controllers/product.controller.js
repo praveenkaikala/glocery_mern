@@ -101,7 +101,7 @@ try {
     const {_id}=req.body
     if(!_id)
     {
-         return response.status(400).json({
+         return res.status(400).json({
             message : "Provide Product Id",
             error : true,
             success : false
@@ -110,19 +110,19 @@ try {
     const prod=await productModel.deleteOne({_id});
     if(!prod)
     {
-        return response.status(403).json({
+        return res.status(403).json({
             message : "Product Not Deleted",
             error : true,
             success : false
         })
     }
-     return response.status(200).json({
+     return res.status(200).json({
             message : "Product Deleted Successfully",
             error : true,
             success : false
         })
 } catch (error) {
-    return response.status(500).json({
+    return res.status(500).json({
             message : error.message || error,
             error : true,
             success : false

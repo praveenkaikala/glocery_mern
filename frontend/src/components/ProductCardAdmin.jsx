@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { IoClose } from "react-icons/io5"
+import { summaryApi } from "../common/SummaryApi"
+import { AxiosPravite } from "../utils/Axios"
 
 const ProductCardAdmin = ({ data, fetchProductData }) => {
   const [editOpen,setEditOpen]= useState(false)
@@ -11,8 +13,8 @@ const ProductCardAdmin = ({ data, fetchProductData }) => {
 
   const handleDelete = async()=>{
     try {
-      const response = await Axios({
-        ...SummaryApi.deleteProduct,
+      const response = await AxiosPravite({
+        ...summaryApi.deleteProduct,
         data : {
           _id : data._id
         }

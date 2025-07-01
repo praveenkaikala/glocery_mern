@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { AxiosPravite } from '../utils/Axios'
 
 const useFetchData = (urldata,dep=[]) => {
-    const [data,setData]=useState([])
+    const [data,setData]=useState({})
     const [loading,setLoading]=useState(false)
     const [refresh,setRefresh]=useState(false)
     const fetchData=async()=>{
@@ -11,7 +11,7 @@ const useFetchData = (urldata,dep=[]) => {
             const resp=await AxiosPravite({
                 ...urldata
             })
-            setData(resp?.data?.data)
+            setData(resp?.data)
             // console.log(resp.data)
         } catch (error) {
             console.log(error)
