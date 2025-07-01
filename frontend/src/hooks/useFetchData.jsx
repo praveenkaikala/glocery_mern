@@ -23,7 +23,10 @@ const useFetchData = (urldata,dep=[]) => {
     useEffect(()=>{
         fetchData()
     },[refresh,...dep])
-  return [data,loading,refresh,setRefresh];
+    const refetchData=()=>{
+        setRefresh(!refresh)
+    }
+  return [data,loading,refetchData];
 }
 
 export default useFetchData
