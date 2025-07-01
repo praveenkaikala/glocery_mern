@@ -80,13 +80,17 @@ export const summaryApi={
         url:"/api/user/product",
         method:"post"
     },
-    getAllProducts:(page=1,limit=10,search="")=>{
+    getAllProducts:(perams)=>{
         return {
              url:"/api/user/get-product",
              method:"post",
              data:{
-                page,limit,search
+                ...perams
              }
         }
+    },
+    deleteProduct:{
+        url:"/api/user/delete-product",
+        method:"delete"
     }
 }
