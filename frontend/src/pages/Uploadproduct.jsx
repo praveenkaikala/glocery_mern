@@ -24,6 +24,7 @@ export const Uploadproduct = () => {
     more_details: {},
     publish: true,
   });
+  const [loading,setLoading]=useState(false)
   const [image, setImage] = useState("");
   const [fields,setfields]=useState([])
   const [modelOpen,setModelOpen] =useState(false)
@@ -100,6 +101,7 @@ export const Uploadproduct = () => {
 const handleSubmit=async(e)=>{
   e.preventDefault();
   try {
+    setLoading(true)
     const categoryIds=data?.category.map((el)=>el._id)
      const subCategoryIds=data?.subcategory.map((el)=>el._id)
      const formData=new FormData();
@@ -135,6 +137,9 @@ const handleSubmit=async(e)=>{
     setImage("")
   } catch (error) {
     toastError(error.message || "Product Creation Failed")
+  }
+  finally{
+    setLoading(false)
   }
 }
 const handleNewFieldChange=(e)=>{
@@ -392,7 +397,16 @@ const handleNewFieldChange=(e)=>{
           <div className="inline-block bg-amber-300 hover:bg-white w-32 px-3 py-1 border rounded cursor-pointer font-semibold text-center" onClick={()=>setModelOpen(true)}>
               add fileds
           </div>
-          <button type="submit">add product</button>
+        <button
+              type="submit"
+              className={`w-full py-2 border rounded cursor-pointer font-semibold  
+                
+                  bg-green-800 text-white hover:bg-green-700 transition-all ease-in-out
+                   
+              `}
+            >
+              {loading ? "Creating..." : "Save Product"}
+            </button>
         </form>
       </div>
       {
