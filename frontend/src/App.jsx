@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { fetchUserDatail } from "./utils/fetchUserdetails";
 import { useDispatch } from "react-redux";
 import { setUser } from "./store/userSlice";
-import { setCategory, setSubCategory } from "./store/productSlice";
+import { setCategory, setLoadingCategory, setSubCategory } from "./store/productSlice";
 import { summaryApi } from "./common/SummaryApi";
 import { AxiosPravite } from "./utils/Axios";
 function  App() {
@@ -21,7 +21,7 @@ function  App() {
    }
    const fetchCategoryList = async () => {
        try {
-         
+         dispatch(setLoadingCategory(true))
          const resp = await AxiosPravite({
            ...summaryApi.getCategotyList,
          });
@@ -42,6 +42,9 @@ function  App() {
        } catch (error) {
          console.log(error);
        } 
+       finally{
+        dispatch(setLoadingCategory(false))
+       }
      };
   useEffect(()=>{
     fetchUser()
