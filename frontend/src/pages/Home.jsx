@@ -3,9 +3,21 @@ import banner from "../assets/banner.jpg"
 import mobileBanner from "../assets/banner-mobile.jpg"
 import { useSelector } from 'react-redux'
 import CardSkeleton from '../components/CardSkeleton'
+import { useNavigate } from 'react-router-dom'
 const Home = () => {
   const category=useSelector((state)=>state?.product?.category)
+  const subCategory=useSelector((state)=>state?.product?.subCategory)
+  const navigate=useNavigate()
   const categoryLoading=useSelector((state)=>state?.product?.loadingCategory)
+  const handleRedirect=async(id,name)=>{
+      const subcatData= subCategory.find((sub)=>{
+        return sub.categoryId?.some((cat)=>{
+          return cat._id==id
+        })
+      })
+      const url=`/${name.replace(/\s+/g, "")}-${id}/${subcatData?.name.replace(/\s+/g, "")}-${subcatData._id}`;
+      navigate(url)
+  } 
   return (
     <section className='bg-white'>
       <div className='container mx-auto'>
@@ -36,7 +48,7 @@ const Home = () => {
          {
            category.map((cat,ind)=>{
              return(
-              <div key={ind}>
+              <div key={ind} onClick={()=>handleRedirect(cat._id,cat.name)}>
                    <div className='cursor-pointer hover:scale-[1.1] transition-all ease-in-out '>
                      <img src={cat.image} alt={cat.name} className='w-full h-full'/>
                      </div>
