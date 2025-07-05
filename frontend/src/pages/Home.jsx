@@ -4,6 +4,8 @@ import mobileBanner from "../assets/banner-mobile.jpg"
 import { useSelector } from 'react-redux'
 import CardSkeleton from '../components/CardSkeleton'
 import { useNavigate } from 'react-router-dom'
+import CategoryWiseProductDisplay from '../components/CategoryWiseProducts'
+import { validUrl } from '../utils/ValidUrl'
 const Home = () => {
   const category=useSelector((state)=>state?.product?.category)
   const subCategory=useSelector((state)=>state?.product?.subCategory)
@@ -15,7 +17,7 @@ const Home = () => {
           return cat._id==id
         })
       })
-      const url=`/${name.replace(/\s+/g, "")}-${id}/${subcatData?.name.replace(/\s+/g, "")}-${subcatData._id}`;
+      const url=`/${validUrl(name)}-${id}/${validUrl(subcatData?.name)}-${subcatData._id}`;
       navigate(url)
   } 
   return (
@@ -59,6 +61,20 @@ const Home = () => {
         </div>
        }
         
+      </div>
+      <div className='px-6'>
+         {
+       category &&
+        category?.map((c,index)=>{
+          return(
+            <CategoryWiseProductDisplay 
+              key={index} 
+              id={c?._id} 
+              name={c?.name}
+            />
+          )
+        })
+      }
       </div>
     </section>
   )
