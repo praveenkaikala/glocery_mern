@@ -1,5 +1,6 @@
 import categoryModel from "../models/category.model.js";
 import CategoryModel from "../models/category.model.js";
+import productModel from "../models/product.model.js";
 import { uploadImage } from "../utils/uploadImage.js";
 
 export const createCategoryController=async(req,res)=>{
@@ -102,6 +103,37 @@ export const DeleteCategoryController=async(req,res)=>{
             error:false
             })
 
+    } catch (error) {
+        return res.status(500).send({
+            message:error.message || error,
+            success:false,
+            error:true
+        })
+    }
+}
+
+
+
+export const getProductByCategory=async(req,res)=>{
+    try {
+        const {id}=req.body;
+        if(!id)
+        {
+            return res.status(400).send({
+                message:"Id required",
+                error:true,
+                success:false
+            })
+        }
+        const products=await productModel.find({
+            category:{$in: id}
+        })
+        return res.status(200).send({
+            message:"Product List",
+            data:products,
+            error:false,
+            success:true
+        })
     } catch (error) {
         return res.status(500).send({
             message:error.message || error,

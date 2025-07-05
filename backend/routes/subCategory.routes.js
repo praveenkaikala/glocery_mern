@@ -6,7 +6,7 @@ import { createSubCategoryController, DeleteSubCategoryController, getSubCategor
 const router=express.Router()
 
 router.post("/create-subcategory",authMiddleware,adminAuth,upload.single("image"),createSubCategoryController)
-router.get("/get-subcategory",authMiddleware,adminAuth,getSubCategoryController)
+router.get("/get-subcategory",getSubCategoryController)
 router.delete("/delete-subcategory",authMiddleware,adminAuth,DeleteSubCategoryController)
 router.put("/update-subcategory",authMiddleware,adminAuth,upload.single("image"),UpdateSubCategoryController)
 export default router
