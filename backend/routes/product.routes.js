@@ -11,5 +11,5 @@ const router=express.Router()
 router.post("/product",authMiddleware,adminAuth,upload.single("image"),uploadProductController)
 router.post("/get-product",authMiddleware,adminAuth,getAllProductsController);
 router.delete("/delete-product",authMiddleware,adminAuth,deleteProductController);
-router.post("/get-product",getProductByCategory);
+router.post("/get-product-by-category",getProductByCategory);
 export default router
