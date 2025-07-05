@@ -92,5 +92,9 @@ export const summaryApi={
     deleteProduct:{
         url:"/api/user/delete-product",
         method:"delete"
+    },
+    getProductByCategory:{
+        url:"/api/user/get-product-by-category",
+        method:"post"
     }
 }
