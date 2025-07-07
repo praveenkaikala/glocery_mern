@@ -18,6 +18,7 @@ import { Uploadproduct } from "../pages/Uploadproduct";
 import Permission from "../layouts/Permission";
 import AdminProduct from "../pages/AdminProduct";
 import ProductPageList from "../pages/ProductPageList";
+import ProductPage from "../pages/ProductPage";
 
 export const router=createBrowserRouter([
     {
@@ -74,6 +75,10 @@ export const router=createBrowserRouter([
                     element:<ProductPageList/>
                    } 
                 ]
+            },
+            {
+                path:"product/:product",
+                element:<ProductPage/>
             }
         ]
     },
