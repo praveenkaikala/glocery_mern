@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { validUrl } from "../utils/ValidUrl"
+import { pricewithDiscount } from "../utils/priceWithDiscount"
+import { DisplayPriceInRupees } from "../utils/priceInRupees"
 
 const CardProduct = ({data}) => {
     const url = `/product/${validUrl(data.name)}-${data._id}`
@@ -18,13 +20,13 @@ const CardProduct = ({data}) => {
         <div className='rounded text-xs w-fit p-[1px] px-2 text-green-600 bg-green-50'>
               10 min 
         </div>
-        {/* <div>
+        <div>
             {
               Boolean(data.discount) && (
                 <p className='text-green-600 bg-green-100 px-2 w-fit text-xs rounded-full'>{data.discount}% discount</p>
               )
             }
-        </div> */}
+        </div>
       </div>
       <div className='px-2 lg:px-0 font-medium text-ellipsis text-sm lg:text-base line-clamp-2'>
         {data.name}
@@ -37,7 +39,7 @@ const CardProduct = ({data}) => {
       <div className='px-2 lg:px-0 flex items-center justify-between gap-1 lg:gap-3 text-sm lg:text-base'>
         <div className='flex items-center gap-1'>
           <div className='font-semibold'>
-              {/* {DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))}  */}
+              {DisplayPriceInRupees(pricewithDiscount(data.price,data.discount))} 
           </div>
           
           
