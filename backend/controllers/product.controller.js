@@ -129,3 +129,55 @@ try {
         })
 }
 }
+
+
+export const getProductByCategoryAndSubCategory  = async(request,response)=>{
+    try {
+        const { categoryId,subCategoryId,page,limit } = request.body
+
+        if(!categoryId || !subCategoryId){
+            return response.status(400).json({
+                message : "Provide categoryId and subCategoryId",
+                error : true,
+                success : false
+            })
+        }
+
+        if(!page){
+            page = 1
+        }
+
+        if(!limit){
+            limit = 10
+        }
+
+        const query = {
+            category : { $in :categoryId  },
+            subcategory : { $in : subCategoryId }
+        }
+
+        const skip = (page - 1) * limit
+
+        const [data,dataCount] = await Promise.all([
+            productModel.find(query).sort({createdAt : -1 }).skip(skip).limit(limit),
+            productModel.countDocuments(query)
+        ])
+
+        return response.json({
+            message : "Product list",
+            data : data,
+            totalCount : dataCount,
+            page : page,
+            limit : limit,
+            success : true,
+            error : false
+        })
+
+    } catch (error) {
+        return response.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })
+    }
+}
