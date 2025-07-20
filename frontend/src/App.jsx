@@ -8,6 +8,7 @@ import { setUser } from "./store/userSlice";
 import { setCategory, setLoadingCategory, setSubCategory } from "./store/productSlice";
 import { summaryApi } from "./common/SummaryApi";
 import { AxiosPravite } from "./utils/Axios";
+import ScrollToTop from "./utils/ScrolltoTop";
 function  App() {
   const dispatch=useDispatch()
   const fetchUser = async () => {
@@ -51,13 +52,14 @@ function  App() {
     fetchCategoryList()
   },[])
   return(
-    <>
+    <div>
+    <ScrollToTop/>
     <Header/>
     <main >
       <Outlet/>
     </main>
     {/* <Footer/> */}
-    </>
+    </div>
   )
 }
 
