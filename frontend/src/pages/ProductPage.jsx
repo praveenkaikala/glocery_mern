@@ -57,7 +57,7 @@ const ProductPage = () => {
         <div className=''>
             <div className='bg-white lg:min-h-[65vh] lg:max-h-[65vh] rounded min-h-56 max-h-56 h-full w-full'>
                 <img
-                    src={data.image}
+                    src={data?.image}
                     className='w-full h-full object-scale-down'
                 /> 
             </div>
@@ -88,11 +88,11 @@ const ProductPage = () => {
             <div className='my-4  hidden lg:grid gap-3 '>
                 <div>
                     <p className='font-semibold'>Description</p>
-                    <p className='text-base'>{data.discription}</p>
+                    <p className='text-base'>{data?.discription}</p>
                 </div>
                 <div>
                     <p className='font-semibold'>Unit</p>
-                    <p className='text-base'>{data.unit}</p>
+                    <p className='text-base'>{data?.unit}</p>
                 </div>
                 {
                   data?.more_details && Object.keys(data?.more_details).map((element,index)=>{
@@ -110,8 +110,8 @@ const ProductPage = () => {
 
         <div className='p-4 lg:pl-7 text-base lg:text-lg'>
             <p className='bg-green-300 w-fit px-2 rounded-full'>10 Min</p>
-            <h2 className='text-lg font-semibold lg:text-3xl'>{data.name}</h2>  
-            <p className=''>{data.unit}</p> 
+            <h2 className='text-lg font-semibold lg:text-3xl'>{data?.name}</h2>  
+            <p className=''>{data?.unit}</p> 
             <Divider/>
             <div>
               <p className=''>Price</p> 
@@ -121,12 +121,12 @@ const ProductPage = () => {
                 </div>
                 {
                   data.discount && (
-                    <p className='line-through'>{DisplayPriceInRupees(data.price)}</p>
+                    <p className='line-through'>{DisplayPriceInRupees(data?.price)}</p>
                   )
                 }
                 {
                   data.discount && (
-                    <p className="font-bold text-green-600 lg:text-2xl">{data.discount}% <span className='text-base text-neutral-500'>Discount</span></p>
+                    <p className="font-bold text-green-600 lg:text-2xl">{data?.discount}% <span className='text-base text-neutral-500'>Discount</span></p>
                   )
                 }
                 
