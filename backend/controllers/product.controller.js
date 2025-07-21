@@ -181,3 +181,31 @@ export const getProductByCategoryAndSubCategory  = async(request,response)=>{
         })
     }
 }
+
+
+export const getProductById=async(req,res)=>{
+    try {
+        const {productId}=req.body
+        const product=await productModel.findById(productId)
+        if(!product)
+        {
+            return res.status(404).json({
+            message : "Product Not Found",
+            error : true,
+            success : false
+        })
+        }
+        return res.status(200).send({
+            message:"Product details",
+            data:product,
+            error:false,
+            success:true
+        })
+    } catch (error) {
+         return res.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })
+    }
+}
