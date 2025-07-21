@@ -100,5 +100,9 @@ export const summaryApi={
     getProductByCategoryAndSubCategory:{
         url:"api/user/get-pruduct-by-category-and-subcategory",
         method:"post"
+    },
+    getProductById:{
+        url:"api/user/get-product-by-id",
+        method:"post"
     }
 }
