@@ -240,6 +240,7 @@ export const searchProduct=async(req,res)=>{
             error:false,
             data:data,
             totalCount:dataCount,
+            totalPage:dataCount/limit,
             page,
             limit
         })
