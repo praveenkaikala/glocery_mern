@@ -9,6 +9,8 @@ const Search = () => {
   const location = useLocation();
   const [isMobile] = useMobile();
   const [isSearchpage, setIsSearchPage] = useState();
+  const [input, setInput] = useState("");
+  const [debouncedInput, setDebouncedInput] = useState("");
   useEffect(() => {
     const isSearch = location.pathname === "/search";
     setIsSearchPage(isSearch);
@@ -19,6 +21,24 @@ const Search = () => {
   };
   const redirectToHome = () => {
     navigate("/");
+  };
+   useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedInput(input);
+    }, 500); // 500ms debounce delay
+
+    return () => clearTimeout(timer);
+  }, [input]);
+
+  // Trigger navigation when debouncedInput changes
+  useEffect(() => {
+    if (debouncedInput) {
+      navigate(`/search?query=${debouncedInput}`);
+    }
+  }, [debouncedInput, navigate]);
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
   };
   return (
     <div className="w-full border min-w-[300px] md:min-w-[400px] h-10 rounded flex items-center text-neutral-600 group focus-within:border-amber-300">
@@ -63,6 +83,7 @@ const Search = () => {
                 placeholder="Search for ..."
                 className="w-full outline-none"
                 autoFocus={true}
+                onChange={handleChange}
               />
             </div>
           )}
