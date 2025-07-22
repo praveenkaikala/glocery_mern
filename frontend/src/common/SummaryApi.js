@@ -104,5 +104,9 @@ export const summaryApi={
     getProductById:{
         url:"api/user/get-product-by-id",
         method:"post"
+    },
+    searchProduct:{
+        url:"api/user/search-product",
+        method:"post"
     }
 }
