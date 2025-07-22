@@ -35,6 +35,10 @@ const Search = () => {
     if (debouncedInput) {
       navigate(`/search?query=${debouncedInput}`);
     }
+    else
+    {
+      navigate("/search")
+    }
   }, [debouncedInput, navigate]);
 
   const handleChange = (e) => {

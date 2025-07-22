@@ -6,6 +6,7 @@ import { AxiosPravite } from '../utils/Axios'
 import { toastError } from '../utils/toastError'
 import CardProduct from '../components/CardProduct'
 import CardSkeleton from '../components/CardSkeleton'
+import nodataImage from "../assets/nodata.webp"
 const SearchPage = () => {
   const [data,setData] = useState([])
   const [loading,setLoading] = useState(true)
@@ -62,8 +63,8 @@ const SearchPage = () => {
   }
 
   return (
-    <section className='bg-white'>
-      <div className='container mx-auto p-4'>
+    <section className='bg-white h-full'>
+      <div className='container mx-auto p-4 h-full'>
         <p className='font-semibold'>Search Results: {data.length}  </p>
 
         <InfiniteScroll
@@ -72,17 +73,23 @@ const SearchPage = () => {
               next={handleFetchMore}
         >
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 py-4 gap-4'>
-              {
+             {
+              !loading && data[0] && (
+                <>
+                 {
                 data.map((p,index)=>{
                   return(
                     <CardProduct data={p} key={p?._id+"searchProduct"+index}/>
                   )
                 })
               }
+                </>
+              )
+             }
 
             {/***loading data */}
             {
-              loading && <CardSkeleton number={10}/>
+              loading && <CardSkeleton number={10} />
             }
         </div>
         </InfiniteScroll>
@@ -92,7 +99,7 @@ const SearchPage = () => {
                 !data[0] && !loading && (
                   <div className='flex flex-col justify-center items-center w-full mx-auto'>
                     <img
-                      src={noDataImage} 
+                      src={nodataImage} 
                       className='w-full h-full max-w-xs max-h-xs block'
                     />
                     <p className='font-semibold my-2'>No Data found</p>
