@@ -209,3 +209,46 @@ export const getProductById=async(req,res)=>{
         })
     }
 }
+
+
+export const searchProduct=async(req,res)=>{
+    try {
+        let {search,page,limit}=req.body
+        if(!page)
+        {
+            page=1
+        }
+        if(!limit)
+        {
+            limit=10
+        }
+        const query=search?{
+            $text:{
+                $search:search
+            }
+        }:{}
+        const skip=(page-1)*limit
+        const [data,dataCount]=await Promise.all([
+            productModel.find(query).sort({createdAt:-1}).skip(skip).limit(limit).populate("category subcategory"),
+            productModel.countDocuments(query)
+
+
+        ])
+        return res.status(200).send({
+            message:"product data",
+            success:true,
+            error:false,
+            data:data,
+            totalCount:dataCount,
+            page,
+            limit
+        })
+
+    } catch (error) {
+         return res.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })
+    }
+}
