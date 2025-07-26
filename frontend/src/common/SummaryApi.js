@@ -108,5 +108,21 @@ export const summaryApi={
     searchProduct:{
         url:"api/user/search-product",
         method:"post"
-    }
+    },
+    addTocart : {
+        url : "/api/user/cart/create",
+        method : 'post'
+    },
+    getCartItem : {
+        url : '/api/user/cart/get',
+        method : 'get'
+    },
+    updateCartItemQty : {
+        url : '/api/user/cart/update-qty',
+        method : 'put'
+    },
+    deleteCartItem : {
+        url : '/api/user/cart/delete-cart-item',
+        method : 'delete'
+    },
 }
