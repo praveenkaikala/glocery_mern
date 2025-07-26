@@ -1,5 +1,5 @@
 import CartProductModel from "../models/cart.model"
-
+import userModel from "../models/user.model"
 export const addToCartItemController = async(req,res)=>{
     try {
         const  userId = req.userId
