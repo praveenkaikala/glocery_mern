@@ -86,7 +86,7 @@ export const sendEmail = async (email, name,verificationLink) => {
                 <a class="button" href="${verificationLink}" target="_blank">Verify Email</a>
               </div>
               <div class="content" style="margin-top: 30px;">
-                If you didn’t request this, you can safely ignore this email.
+                If you didn’t req this, you can safely ignore this email.
               </div>
               <div class="footer">
                 &copy; ${new Date().getFullYear()} Blinkit. All rights reserved.

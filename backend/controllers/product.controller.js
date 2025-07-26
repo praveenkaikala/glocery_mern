@@ -51,10 +51,10 @@ export const uploadProductController=async(req,res)=>{
 }
 
 
-export const getAllProductsController = async(request,response)=>{
+export const getAllProductsController = async(req,res)=>{
     try {
         
-        let { page, limit, search } = request.body 
+        let { page, limit, search } = req.body 
 
         if(!page){
             page = 1
@@ -77,7 +77,7 @@ export const getAllProductsController = async(request,response)=>{
             productModel.countDocuments(query)
         ])
 
-        return response.json({
+        return res.json({
             message : "Product data",
             error : false,
             success : true,
@@ -86,7 +86,7 @@ export const getAllProductsController = async(request,response)=>{
             data : data
         })
     } catch (error) {
-        return response.status(500).json({
+        return res.status(500).json({
             message : error.message || error,
             error : true,
             success : false
@@ -131,12 +131,12 @@ try {
 }
 
 
-export const getProductByCategoryAndSubCategory  = async(request,response)=>{
+export const getProductByCategoryAndSubCategory  = async(req,res)=>{
     try {
-        const { categoryId,subCategoryId,page,limit } = request.body
+        const { categoryId,subCategoryId,page,limit } = req.body
 
         if(!categoryId || !subCategoryId){
-            return response.status(400).json({
+            return res.status(400).json({
                 message : "Provide categoryId and subCategoryId",
                 error : true,
                 success : false
@@ -163,7 +163,7 @@ export const getProductByCategoryAndSubCategory  = async(request,response)=>{
             productModel.countDocuments(query)
         ])
 
-        return response.json({
+        return res.json({
             message : "Product list",
             data : data,
             totalCount : dataCount,
@@ -174,7 +174,7 @@ export const getProductByCategoryAndSubCategory  = async(request,response)=>{
         })
 
     } catch (error) {
-        return response.status(500).json({
+        return res.status(500).json({
             message : error.message || error,
             error : true,
             success : false
