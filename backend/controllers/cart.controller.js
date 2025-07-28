@@ -90,7 +90,7 @@ export const updateCartItemQtyController = async(req,res)=>{
 
         const updateCartitem = await CartProductModel.updateOne({
             _id : _id,
-            userId : userId
+            user_id : userId
         },{
             quantity : qty
         })
