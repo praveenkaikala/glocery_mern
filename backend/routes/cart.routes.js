@@ -5,9 +5,9 @@ import { addToCartItemController, deleteCartItemQtyController, getCartItemContro
 const router= express.Router()
 
 
-router.post('/create',authMiddleware,addToCartItemController)
-router.get("/get",authMiddleware,getCartItemController)
-router.put('/update-qty',authMiddleware,updateCartItemQtyController)
-router.delete('/delete-cart-item',authMiddleware,deleteCartItemQtyController)
+router.post('/cart/create',authMiddleware,addToCartItemController)
+router.get("/cart/get",authMiddleware,getCartItemController)
+router.put('/cart/update-qty',authMiddleware,updateCartItemQtyController)
+router.delete('/cart/delete-cart-item',authMiddleware,deleteCartItemQtyController)
 
 export default router
