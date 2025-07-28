@@ -3,11 +3,16 @@ import { summaryApi } from "../common/SummaryApi"
 import { AxiosPravite } from "../utils/Axios"
 import { toastError } from "../utils/toastError"
 import DotLoading from "./DotLoading"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { toastSuccess } from "../utils/toastSuccess"
+import { useGlobalContext } from "../provider/Provider"
 
 const AddToCartButton = ({ data }) => {
-    // const { fetchCartItem, updateCartItem, deleteCartItem } = useGlobalContext()
+    const { fetchCartItem, updateCartItem, deleteCartItem } = useGlobalContext()
     const [loading, setLoading] = useState(false)
-    const cartItem = useSelector(state => state.cartItem.cart)
+    const cartItem = useSelector(state => state.cart.cart)
+    console.log(cartItem)
     const [isAvailableCart, setIsAvailableCart] = useState(false)
     const [qty, setQty] = useState(0)
     const [cartItemDetails,setCartItemsDetails] = useState()
@@ -29,13 +34,13 @@ const AddToCartButton = ({ data }) => {
             const { data: responseData } = response
 
             if (responseData.success) {
-                toast.success(responseData.message)
+                toastSuccess(responseData.message)
                 if (fetchCartItem) {
                     fetchCartItem()
                 }
             }
         } catch (error) {
-            toastError(error)
+            toastError("Item Not Added")
         } finally {
             setLoading(false)
         }
@@ -44,10 +49,10 @@ const AddToCartButton = ({ data }) => {
 
     //checking this item in cart or not
     useEffect(() => {
-        const checkingitem = cartItem.some(item => item.productId._id === data._id)
+        const checkingitem = cartItem.some(item => item.product_id._id === data._id)
         setIsAvailableCart(checkingitem)
 
-        const product = cartItem.find(item => item.productId._id === data._id)
+        const product = cartItem.find(item => item.product_id._id === data._id)
         setQty(product?.quantity)
         setCartItemsDetails(product)
     }, [data, cartItem])
@@ -57,7 +62,7 @@ const AddToCartButton = ({ data }) => {
         e.preventDefault()
         e.stopPropagation()
     
-    //    const response = await  updateCartItem(cartItemDetails?._id,qty+1)
+       const response = await  updateCartItem(cartItemDetails?._id,qty+1)
         
        if(response.success){
         toast.success("Item added")
@@ -68,9 +73,9 @@ const AddToCartButton = ({ data }) => {
         e.preventDefault()
         e.stopPropagation()
         if(qty === 1){
-            // deleteCartItem(cartItemDetails?._id)
+            deleteCartItem(cartItemDetails?._id)
         }else{
-            // const response = await updateCartItem(cartItemDetails?._id,qty-1)
+            const response = await updateCartItem(cartItemDetails?._id,qty-1)
 
             if(response.success){
                 toast.success("Item remove")

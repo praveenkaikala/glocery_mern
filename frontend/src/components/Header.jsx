@@ -9,12 +9,14 @@ import useMobile from "../hooks/useMobile";
 import { TiShoppingCart } from "react-icons/ti";
 import { useSelector } from "react-redux";
 import UserMenu from "./UserMenu";
+import { useGlobalContext } from "../provider/Provider";
 const Header = () => {
   const [isMobile] = useMobile();
   const location = useLocation();
   const [showuserMenu,setUserShowMenu]=useState(false)
   const user=useSelector(state=>state?.user)
   const isSearchpage = location.pathname === "/search";
+  const {totalQty,totalPrice}=useGlobalContext()
   const handleUserMenu=()=>{
     setUserShowMenu(!showuserMenu)
   }
@@ -93,8 +95,8 @@ const Header = () => {
               <div className="animate-bounce">
               <TiShoppingCart size={26}/>
               </div>
-              <div>
-                
+              <div className="flex gap-2">
+                <p className="font-semibold">{totalQty}</p>
                 <p className="font-semibold">My Cart</p>
               </div>
             </button>

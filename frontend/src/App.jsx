@@ -9,6 +9,7 @@ import { setCategory, setLoadingCategory, setSubCategory } from "./store/product
 import { summaryApi } from "./common/SummaryApi";
 import { AxiosPravite } from "./utils/Axios";
 import ScrollToTop from "./utils/ScrolltoTop";
+import Provider from "./provider/Provider";
 function  App() {
   const dispatch=useDispatch()
   const fetchUser = async () => {
@@ -52,14 +53,17 @@ function  App() {
     fetchCategoryList()
   },[])
   return(
-    <div>
+    <Provider>
+      <div>
+
     <ScrollToTop/>
     <Header/>
     <main >
       <Outlet/>
     </main>
     {/* <Footer/> */}
-    </div>
+      </div>
+    </Provider>
   )
 }
 

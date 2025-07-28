@@ -36,8 +36,12 @@ const Search = () => {
       navigate(`/search?query=${debouncedInput}`);
     }
     else
-    {
-      navigate("/search")
+    { 
+      if(location.pathname.startsWith("/search"))
+      {
+
+        navigate("/search")
+      }
     }
   }, [debouncedInput, navigate]);
 
