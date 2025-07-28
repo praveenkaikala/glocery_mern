@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { validUrl } from "../utils/ValidUrl"
 import { pricewithDiscount } from "../utils/priceWithDiscount"
 import { DisplayPriceInRupees } from "../utils/priceInRupees"
+import AddToCartButton from "./AddToCartButton"
 
 const CardProduct = ({data}) => {
     const url = `/product/${validUrl(data.name)}-${data._id}`
@@ -44,6 +45,16 @@ const CardProduct = ({data}) => {
       {DisplayPriceInRupees(pricewithDiscount(data.price, data.discount))}
     </div>
     {/* Optionally enable stock or button here */}
+     <div className=''>
+          {
+            data.stock == 0 ? (
+              <p className='text-red-500 text-sm text-center'>Out of stock</p>
+            ) : (
+              <AddToCartButton data={data} />
+            )
+          }
+            
+        </div>
   </div>
 </Link>
 
