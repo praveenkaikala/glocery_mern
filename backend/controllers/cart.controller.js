@@ -14,8 +14,8 @@ export const addToCartItemController = async(req,res)=>{
         }
 
         const checkItemCart = await CartProductModel.findOne({
-            userId : userId,
-            productId : productId
+            user_id: userId,
+            product_id : productId
         })
 
         if(checkItemCart){
@@ -26,12 +26,12 @@ export const addToCartItemController = async(req,res)=>{
 
         const cartItem = new CartProductModel({
             quantity : 1,
-            userId : userId,
-            productId : productId
+            user_id : userId,
+            product_id : productId
         })
         const save = await cartItem.save()
 
-        const updateCartUser = await UserModel.updateOne({ _id : userId},{
+        const updateCartUser = await userModel.updateOne({ _id : userId},{
             $push : { 
                 shopping_cart : productId
             }
@@ -59,8 +59,8 @@ export const getCartItemController = async(req,res)=>{
         const userId = req.userId
 
         const cartItem =  await CartProductModel.find({
-            userId : userId
-        }).populate('productId')
+            user_id : userId
+        }).populate('product_id')
 
         return res.json({
             data : cartItem,
