@@ -10,6 +10,7 @@ import { TiShoppingCart } from "react-icons/ti";
 import { useSelector } from "react-redux";
 import UserMenu from "./UserMenu";
 import { useGlobalContext } from "../provider/Provider";
+import ViewCartItems from "./ViewCartItems";
 const Header = () => {
   const [isMobile] = useMobile();
   const location = useLocation();
@@ -17,6 +18,7 @@ const Header = () => {
   const user=useSelector(state=>state?.user)
   const isSearchpage = location.pathname === "/search";
   const {totalQty,totalPrice}=useGlobalContext()
+  const [openCart,setOpenCart]=useState(false)
   const handleUserMenu=()=>{
     setUserShowMenu(!showuserMenu)
   }
@@ -91,7 +93,7 @@ const Header = () => {
                 <Link to={"/login"}><button className="font-semibold text-md cursor-pointer">Login</button></Link>
               )
             }
-            <button className="flex items-center gap-2 bg-green-900 text-white px-4 py-2 rounded cursor-pointer">
+            <button className="flex items-center gap-2 bg-green-900 text-white px-4 py-2 rounded cursor-pointer" onClick={()=>setOpenCart(true)}>
               <div className="animate-bounce">
               <TiShoppingCart size={26}/>
               </div>
@@ -118,6 +120,11 @@ const Header = () => {
       <div className="md:hidden block container mx-auto px-3">
         <Search />
       </div>
+      {
+        openCart && (
+          <ViewCartItems close={()=>setOpenCart(false)}/>
+        )
+      }
     </header>
   );
 };
