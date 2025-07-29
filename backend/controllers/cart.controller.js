@@ -124,7 +124,7 @@ export const deleteCartItemQtyController = async(req,res)=>{
         })
       }
 
-      const deleteCartItem  = await CartProductModel.deleteOne({_id : _id, userId : userId })
+      const deleteCartItem  = await CartProductModel.deleteOne({_id : _id, user_id : userId })
 
       return res.json({
         message : "Item remove",
