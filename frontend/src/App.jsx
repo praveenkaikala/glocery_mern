@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useLoaderData, useLocation } from "react-router-dom"
 import "./index.css"
 import Header from "./components/Header"
 import { useEffect } from "react";
@@ -10,8 +10,10 @@ import { summaryApi } from "./common/SummaryApi";
 import { AxiosPravite } from "./utils/Axios";
 import ScrollToTop from "./utils/ScrolltoTop";
 import Provider from "./provider/Provider";
+import CartMobileLink from "./components/CartMobile";
 function  App() {
   const dispatch=useDispatch()
+  const location=useLocation()
   const fetchUser = async () => {
     try {
       const data=await fetchUserDatail();
@@ -62,6 +64,11 @@ function  App() {
       <Outlet/>
     </main>
     {/* <Footer/> */}
+     {
+        location.pathname !== '/checkout' && (
+          <CartMobileLink/>
+        )
+      }
       </div>
     </Provider>
   )

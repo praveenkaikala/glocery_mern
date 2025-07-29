@@ -80,14 +80,14 @@ const updateCartItem = async(id,qty)=>{
       setTotalQty(qty)
       
       const tPrice = cart.reduce((preve,curr)=>{
-          const priceAfterDiscount = pricewithDiscount(curr?.productId?.price,curr?.productId?.discount)
+          const priceAfterDiscount = pricewithDiscount(curr?.product_id?.price,curr?.product_id?.discount)
 
           return preve + (priceAfterDiscount * curr.quantity)
       },0)
       setTotalPrice(tPrice)
 
       const notDiscountPrice = cart.reduce((preve,curr)=>{
-        return preve + (curr?.productId?.price * curr.quantity)
+        return preve + (curr?.product_id?.price * curr.quantity)
       },0)
       setNotDiscountTotalPrice(notDiscountPrice)
   },[cart])
