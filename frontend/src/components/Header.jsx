@@ -96,8 +96,15 @@ const Header = () => {
               <TiShoppingCart size={26}/>
               </div>
               <div className="flex gap-2">
-                <p className="font-semibold">{totalQty}</p>
-                <p className="font-semibold">My Cart</p>
+                {totalQty ? (
+                  <>
+                  <p className="font-semibold">{totalQty}</p>
+                  <p className="font-semibold">Items</p>
+                  </>
+
+                ):(
+                  <p className="font-semibold">My Cart</p>
+                )}
               </div>
             </button>
           </div>

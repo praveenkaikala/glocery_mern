@@ -17,6 +17,7 @@ const Provider = ({children}) => {
     const [totalPrice,setTotalPrice] = useState(0)
      const [notDiscountTotalPrice,setNotDiscountTotalPrice] = useState(0)
     const [totalQty,setTotalQty] = useState(0)
+    const user=useSelector(state=>state.user)
     const fetchCartItem = async()=>{
         try {
           const response = await AxiosPravite({
@@ -90,6 +91,9 @@ const updateCartItem = async(id,qty)=>{
       },0)
       setNotDiscountTotalPrice(notDiscountPrice)
   },[cart])
+  useEffect(()=>{
+    fetchCartItem()
+  },[user])
   return (
    <contextProvider.Provider value={{
     fetchCartItem,
