@@ -12,6 +12,7 @@ import { createSlice } from "@reduxjs/toolkit";
         verify_email:false,
         role:null,
         mobile:null,
+        address:[]
            },
     reducers:{
         setUser:(state,action)=>{
@@ -41,10 +42,13 @@ import { createSlice } from "@reduxjs/toolkit";
             state.name=action.payload?.name
             state.email=action.payload?.email
             state.mobile=action.payload?.mobile
+        },
+        setAddress:(state,action)=>{
+            state.address=action.payload
         }
 
     }
 })
 
-export const {setUser,removeUser,updateAvatar,updateUser}=userSlice.actions
+export const {setUser,removeUser,updateAvatar,updateUser,setAddress}=userSlice.actions
 export default userSlice.reducer
