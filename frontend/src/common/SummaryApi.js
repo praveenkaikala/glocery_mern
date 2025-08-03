@@ -125,4 +125,12 @@ export const summaryApi={
         url : '/api/user/cart/delete-cart-item',
         method : 'delete'
     },
+    createAddress : {
+        url : '/api/user/address/create',
+        method : 'post'
+    },
+    getAddress:{
+        url : '/api/user/address/get',
+        method : 'get'
+    }
 }

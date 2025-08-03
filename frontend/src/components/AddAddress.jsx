@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { AxiosPravite } from "../utils/Axios";
 import { summaryApi } from "../common/SummaryApi";
 import { IoClose } from "react-icons/io5";
+import { toastSuccess } from "../utils/toastSuccess";
+import { toastError } from "../utils/toastError";
 const AddAddress = ({close}) => {
     const { register, handleSubmit,reset } = useForm()
     // const { fetchAddress } = useGlobalContext()
@@ -26,15 +28,15 @@ const AddAddress = ({close}) => {
             const { data : responseData } = response
             
             if(responseData.success){
-                toast.success(responseData.message)
+                toastSuccess(responseData.message)
                 if(close){
                     close()
                     reset()
-                    fetchAddress()
+                    // fetchAddress()
                 }
             }
         } catch (error) {
-            AxiosToastError(error)
+            toastError(error)
         }
     }
   return (

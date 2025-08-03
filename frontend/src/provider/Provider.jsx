@@ -8,6 +8,7 @@ import { toastSuccess } from '../utils/toastSuccess';
 import { handleAddItemCart } from '../store/cartSlice';
 import { MdWifiCalling } from 'react-icons/md';
 import { pricewithDiscount } from '../utils/priceWithDiscount';
+import { setAddress } from '../store/addressSlice';
 const contextProvider=createContext(null);
 
 export const useGlobalContext=()=>useContext(contextProvider)
@@ -18,6 +19,17 @@ const Provider = ({children}) => {
      const [notDiscountTotalPrice,setNotDiscountTotalPrice] = useState(0)
     const [totalQty,setTotalQty] = useState(0)
     const user=useSelector(state=>state.user)
+    const fetchAddress=async()=>{
+      try {
+        const response=await AxiosPravite({
+          ...summaryApi.getAddress
+        })
+         const { data : responseData } = response
+         dispatch(setAddress(responseData.data))
+      } catch (error) {
+        console.log(error)
+      }
+    }
     const fetchCartItem = async()=>{
         try {
           const response = await AxiosPravite({
@@ -25,10 +37,10 @@ const Provider = ({children}) => {
           })
           const { data : responseData } = response
     
-         console.log("calling1")
+
             dispatch(handleAddItemCart(responseData.data))
-            console.log("calling")
-            console.log(responseData)
+          
+           
     
         } catch (error) {
           console.log(error)
@@ -94,11 +106,15 @@ const updateCartItem = async(id,qty)=>{
   useEffect(()=>{
     fetchCartItem()
   },[user])
+  useEffect(()=>{
+    fetchAddress()
+  },[user])
   return (
    <contextProvider.Provider value={{
     fetchCartItem,
     updateCartItem,
     deleteCartItem,
+    fetchAddress,
     totalPrice,
     totalQty,
     notDiscountTotalPrice

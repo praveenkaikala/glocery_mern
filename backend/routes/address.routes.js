@@ -6,6 +6,6 @@ const router= express.Router()
 
 
 router.post('/address/create',authMiddleware,createAddress)
-router.post('/address/get',authMiddleware,getAddress)
+router.get('/address/get',authMiddleware,getAddress)
 
 export default router
