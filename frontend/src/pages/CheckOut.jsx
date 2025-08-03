@@ -3,6 +3,7 @@ import { useGlobalContext } from '../provider/Provider'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { DisplayPriceInRupees } from '../utils/priceInRupees'
+import AddAddress from '../components/AddAddress'
 
 const CheckoutPage = () => {
   const { notDiscountTotalPrice, totalPrice, totalQty, fetchCartItem,fetchOrder } = useGlobalContext()
@@ -143,11 +144,11 @@ const CheckoutPage = () => {
       </div>
 
 
-      {/* {
+      {
         openAddress && (
           <AddAddress close={() => setOpenAddress(false)} />
         )
-      } */}
+      }
     </section>
   )
 }
