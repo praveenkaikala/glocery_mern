@@ -10,7 +10,7 @@ const addressSlice=createSlice({
     initialState,
     reducers:{
          setAddress : (state,action)=>{
-           state.cart = [...action.payload]
+           state.address = [...action.payload]
         },
     }
 

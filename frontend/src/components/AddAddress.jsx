@@ -7,7 +7,7 @@ import { toastSuccess } from "../utils/toastSuccess";
 import { toastError } from "../utils/toastError";
 const AddAddress = ({close}) => {
     const { register, handleSubmit,reset } = useForm()
-    // const { fetchAddress } = useGlobalContext()
+    const { fetchAddress } = useGlobalContext()
 
     const onSubmit = async(data)=>{
         console.log("data",data)
@@ -32,7 +32,7 @@ const AddAddress = ({close}) => {
                 if(close){
                     close()
                     reset()
-                    // fetchAddress()
+                    fetchAddress()
                 }
             }
         } catch (error) {
