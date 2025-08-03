@@ -10,11 +10,12 @@ export const createAddress=async(req,res)=>{
             state,
             mobile,
             country,mobile,
-            pincode
+            pincode,
+            userId
         })
        const save= await createAddress.save()
 
-        const user=await userModel.updateOne({_id:userId},{
+        const user=await userModel.findByIdAndUpdate(userId,{
             $push:{
                 address_details:save._id
             }
@@ -32,5 +33,25 @@ export const createAddress=async(req,res)=>{
             error : true,
             success : false
         })   
+    }
+}
+
+
+export const getAddress=async(req,res)=>{
+    try {
+        const userId=req.userId;
+        const addresses=await addressModel.find({userId}).sort({createdAt:-1})
+         return res.json({
+            data : addresses,
+            message : "Address List",
+            error : false,
+            success : true
+        })
+    } catch (error) {
+         return res.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })  
     }
 }

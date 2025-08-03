@@ -23,9 +23,13 @@ const addressSchema=mongoose.Schema({
     mobile:{
         type:Number,
     },
-    statue:{
+    status:{
         type:Boolean,
         default:true
+    },
+    userId : {
+        type : mongoose.Schema.ObjectId,
+        ref:"user"
     }
 },{
     timestamps:true
