@@ -24,19 +24,20 @@ useEffect(()=>{
         document.body.style.overflow="auto"
     }
 },[])
-    const onSubmit = async(data)=>{
-        console.log("data",data)
+    const onSubmit = async(edata)=>{
+        console.log("data",edata)
     
         try {
             const response = await AxiosPravite({
-                ...summaryApi.createAddress,
+                ...summaryApi.updateAddress,
                 data : {
-                    address_line :data.addressline,
-                    city : data.city,
-                    state : data.state,
-                    country : data.country,
-                    pincode : data.pincode,
-                    mobile : data.mobile
+                    id:data?._id,
+                    address_line :edata.addressline,
+                    city : edata.city,
+                    state : edata.state,
+                    country : edata.country,
+                    pincode : edata.pincode,
+                    mobile : edata.mobile
                 }
             })
 

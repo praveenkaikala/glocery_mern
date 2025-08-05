@@ -55,3 +55,27 @@ export const getAddress=async(req,res)=>{
         })  
     }
 }
+
+
+export const updateAddress=async(req,res)=>{
+     try {
+        const {city,address_line,state,pincode,country,mobile,id}=req.body;
+        const userId=req.userId;
+        const updated=await addressModel.findOneAndUpdate({_id:id,userId},{
+           city,address_line,state,pincode,country,mobile
+        })
+         return res.json({
+            data : updated,
+            message : "Address Updated successfully",
+            error : false,
+            success : true
+        })
+
+    } catch (error) {
+      return res.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })   
+    }
+}
