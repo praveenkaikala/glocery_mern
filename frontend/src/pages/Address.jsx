@@ -6,6 +6,7 @@ import { toastError } from "../utils/toastError"
 import { toastSuccess } from "../utils/toastSuccess"
 import { MdDelete, MdEdit } from "react-icons/md"
 import AddAddress from "../components/AddAddress"
+import EditAddress from "../components/EditAddress"
 
 const Address = () => {
   const addressList = useSelector(state => state.address.address)
@@ -80,11 +81,11 @@ const Address = () => {
           )
         }
 
-        {/* {
+        {
           OpenEdit && (
-            <EditAddressDetails data={editData} close={()=>setOpenEdit(false)}/>
+            <EditAddress data={editData} close={()=>setOpenEdit(false)}/>
           )
-        } */}
+        }
     </div>
   )
 }
