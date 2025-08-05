@@ -132,5 +132,9 @@ export const summaryApi={
     getAddress:{
         url : '/api/user/address/get',
         method : 'get'
+    },
+    updateAddress:{
+        url : '/api/user/address/update',
+        method : 'put'
     }
 }
