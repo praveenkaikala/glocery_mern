@@ -136,5 +136,9 @@ export const summaryApi={
     updateAddress:{
         url : '/api/user/address/update',
         method : 'put'
+    },
+    deleteAddress:{
+        url : '/api/user/address/delete',
+        method : 'delete'
     }
 }

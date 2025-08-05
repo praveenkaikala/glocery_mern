@@ -7,6 +7,8 @@ import { toastSuccess } from "../utils/toastSuccess"
 import { MdDelete, MdEdit } from "react-icons/md"
 import AddAddress from "../components/AddAddress"
 import EditAddress from "../components/EditAddress"
+import { summaryApi } from "../common/SummaryApi"
+import { AxiosPravite } from "../utils/Axios"
 
 const Address = () => {
   const addressList = useSelector(state => state.address.address)
@@ -17,10 +19,10 @@ const Address = () => {
 
   const handleDisableAddress = async(id)=>{
     try {
-      const response = await Axios({
-        ...SummaryApi.disableAddress,
+      const response = await AxiosPravite({
+        ...summaryApi.deleteAddress,
         data : {
-          _id : id
+          id : id
         }
       })
       if(response.data.success){

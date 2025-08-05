@@ -40,7 +40,7 @@ export const createAddress=async(req,res)=>{
 export const getAddress=async(req,res)=>{
     try {
         const userId=req.userId;
-        const addresses=await addressModel.find({userId}).sort({createdAt:-1})
+        const addresses=await addressModel.find({userId,status:true}).sort({createdAt:-1})
          return res.json({
             data : addresses,
             message : "Address List",
@@ -63,6 +63,29 @@ export const updateAddress=async(req,res)=>{
         const userId=req.userId;
         const updated=await addressModel.findOneAndUpdate({_id:id,userId},{
            city,address_line,state,pincode,country,mobile
+        })
+         return res.json({
+            data : updated,
+            message : "Address Updated successfully",
+            error : false,
+            success : true
+        })
+
+    } catch (error) {
+      return res.status(500).json({
+            message : error.message || error,
+            error : true,
+            success : false
+        })   
+    }
+}
+
+export const deleteAddress=async(req,res)=>{
+     try {
+        const {id}=req.body;
+        const userId=req.userId;
+        const updated=await addressModel.findOneAndUpdate({_id:id,userId},{
+            status:false
         })
          return res.json({
             data : updated,
