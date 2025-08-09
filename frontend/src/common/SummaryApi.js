@@ -140,5 +140,9 @@ export const summaryApi={
     deleteAddress:{
         url : '/api/user/address/delete',
         method : 'delete'
+    },
+     cod:{
+        url : '/api/user/order/cod',
+        method : 'post'
     }
 }

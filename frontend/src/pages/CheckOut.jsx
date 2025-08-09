@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { DisplayPriceInRupees } from "../utils/priceInRupees";
 import AddAddress from "../components/AddAddress";
+import { summaryApi } from "../common/SummaryApi";
+import { AxiosPravite } from "../utils/Axios";
 
 const CheckoutPage = () => {
   const {
@@ -19,39 +21,39 @@ const CheckoutPage = () => {
   const cartItemsList = useSelector((state) => state.cart.cart);
   const navigate = useNavigate();
 
-  //   const handleCashOnDelivery = async() => {
-  //       try {
-  //           const response = await Axios({
-  //             ...SummaryApi.CashOnDeliveryOrder,
-  //             data : {
-  //               list_items : cartItemsList,
-  //               addressId : addressList[selectAddress]?._id,
-  //               subTotalAmt : totalPrice,
-  //               totalAmt :  totalPrice,
-  //             }
-  //           })
+    const handleCashOnDelivery = async() => {
+        try {
+            const response = await AxiosPravite({
+              ...summaryApi.cod,
+              data : {
+                list_items : cartItemsList,
+                addressId : addressList[selectAddress]?._id,
+                subTotalAmt : totalPrice,
+                totalAmt :  totalPrice,
+              }
+            })
 
-  //           const { data : responseData } = response
+            const { data : responseData } = response
 
-  //           if(responseData.success){
-  //               toast.success(responseData.message)
-  //               if(fetchCartItem){
-  //                 fetchCartItem()
-  //               }
-  //               if(fetchOrder){
-  //                 fetchOrder()
-  //               }
-  //               navigate('/success',{
-  //                 state : {
-  //                   text : "Order"
-  //                 }
-  //               })
-  //           }
+            if(responseData.success){
+                toast.success(responseData.message)
+                if(fetchCartItem){
+                  fetchCartItem()
+                }
+                if(fetchOrder){
+                  fetchOrder()
+                }
+                navigate('/success',{
+                  state : {
+                    text : "Order"
+                  }
+                })
+            }
 
-  //       } catch (error) {
-  //         AxiosToastError(error)
-  //       }
-  //   }
+        } catch (error) {
+          AxiosToastError(error)
+        }
+    }
 
   //   const handleOnlinePayment = async()=>{
   //     try {
@@ -160,7 +162,7 @@ const CheckoutPage = () => {
               Online Payment
             </button>
 
-            <button className="py-2 px-4 border-2 border-green-600 font-semibold text-green-600 hover:bg-green-600 hover:text-white">
+            <button className="py-2 px-4 border-2 border-green-600 font-semibold text-green-600 hover:bg-green-600 hover:text-white" onClick={handleCashOnDelivery}>
               Cash on Delivery
             </button>
           </div>
