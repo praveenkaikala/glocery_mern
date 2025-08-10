@@ -6,6 +6,8 @@ import { DisplayPriceInRupees } from "../utils/priceInRupees";
 import AddAddress from "../components/AddAddress";
 import { summaryApi } from "../common/SummaryApi";
 import { AxiosPravite } from "../utils/Axios";
+import { toastSuccess } from "../utils/toastSuccess";
+import { toastError } from "../utils/toastError";
 
 const CheckoutPage = () => {
   const {
@@ -36,13 +38,13 @@ const CheckoutPage = () => {
             const { data : responseData } = response
 
             if(responseData.success){
-                toast.success(responseData.message)
+                toastSuccess(responseData.message)
                 if(fetchCartItem){
                   fetchCartItem()
                 }
-                if(fetchOrder){
-                  fetchOrder()
-                }
+                // if(fetchOrder){
+                //   fetchOrder()
+                // }
                 navigate('/success',{
                   state : {
                     text : "Order"
@@ -51,7 +53,7 @@ const CheckoutPage = () => {
             }
 
         } catch (error) {
-          AxiosToastError(error)
+          toastError(error)
         }
     }
 

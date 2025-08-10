@@ -20,6 +20,7 @@ import AdminProduct from "../pages/AdminProduct";
 import ProductPageList from "../pages/ProductPageList";
 import ProductPage from "../pages/ProductPage";
 import CheckOut from "../pages/CheckOut";
+import Success from "../pages/Success";
 
 export const router=createBrowserRouter([
     {
@@ -33,6 +34,10 @@ export const router=createBrowserRouter([
             {
                 path:"/search",
                 element:<SearchPage/>
+            },
+            {
+                path:"/success",
+                element:<Success/>
             }
             ,{
                 path:"dashboard",
