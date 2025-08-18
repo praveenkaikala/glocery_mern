@@ -12,7 +12,7 @@ const CardProduct = ({data}) => {
   return (
     <Link
   to={url}
-  className='border p-2 grid gap-1 min-w-24 rounded bg-white cursor-pointer'
+  className='border p-2 grid gap-1 min-w-50 max-w-50 rounded bg-white cursor-pointer'
 >
   <div className='min-h-12 max-h-16 overflow-hidden rounded'>
     <img
