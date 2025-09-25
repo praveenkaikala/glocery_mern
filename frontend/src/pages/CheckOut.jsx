@@ -8,7 +8,7 @@ import { summaryApi } from "../common/SummaryApi";
 import { AxiosPravite } from "../utils/Axios";
 import { toastSuccess } from "../utils/toastSuccess";
 import { toastError } from "../utils/toastError";
-
+import {loadStripe} from '@stripe/stripe-js'
 const CheckoutPage = () => {
   const {
     notDiscountTotalPrice,
@@ -57,36 +57,36 @@ const CheckoutPage = () => {
         }
     }
 
-  //   const handleOnlinePayment = async()=>{
-  //     try {
-  //         toast.loading("Loading...")
-  //         const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY
-  //         const stripePromise = await loadStripe(stripePublicKey)
+    const handleOnlinePayment = async()=>{
+      try {
+          // toast.loading("Loading...")
+          const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY
+          const stripePromise = await loadStripe(stripePublicKey)
 
-  //         const response = await Axios({
-  //             ...SummaryApi.payment_url,
-  //             data : {
-  //               list_items : cartItemsList,
-  //               addressId : addressList[selectAddress]?._id,
-  //               subTotalAmt : totalPrice,
-  //               totalAmt :  totalPrice,
-  //             }
-  //         })
+          const response = await AxiosPravite({
+              ...summaryApi.onlinePayment,
+              data : {
+                list_items : cartItemsList,
+                addressId : addressList[selectAddress]?._id,
+                subTotalAmt : totalPrice,
+                totalAmt :  totalPrice,
+              }
+          })
 
-  //         const { data : responseData } = response
+          const { data : responseData } = response
+          stripePromise.redirectToCheckout({ sessionId : responseData?.data.id })
 
-  //         stripePromise.redirectToCheckout({ sessionId : responseData.id })
-
-  //         if(fetchCartItem){
-  //           fetchCartItem()
-  //         }
-  //         if(fetchOrder){
-  //           fetchOrder()
-  //         }
-  //     } catch (error) {
-  //         AxiosToastError(error)
-  //     }
-  //   }
+          if(fetchCartItem){
+            fetchCartItem()
+          }
+          if(fetchOrder){
+            fetchOrder()
+          }
+      } catch (error) {
+        console.log(error)
+        toastError(error.message || "order failed")
+      }
+    }
   return (
     <section className="bg-blue-50">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row w-full gap-5 justify-between">
@@ -160,7 +160,7 @@ const CheckoutPage = () => {
             </div>
           </div>
           <div className="w-full flex flex-col gap-4">
-            <button className="py-2 px-4 bg-green-600 hover:bg-green-700 rounded text-white font-semibold">
+            <button className="py-2 px-4 bg-green-600 hover:bg-green-700 rounded text-white font-semibold" onClick={handleOnlinePayment}>
               Online Payment
             </button>
 

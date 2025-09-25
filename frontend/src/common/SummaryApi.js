@@ -144,5 +144,9 @@ export const summaryApi={
      cod:{
         url : '/api/user/order/cod',
         method : 'post'
+    }, 
+    onlinePayment:{
+        url : '/api/user/order/online',
+        method : 'post'
     }
 }
