@@ -83,6 +83,31 @@ export const onlinePaymentController=async(req,res)=>{
       cancel_url:`${process.env.FRONTEND_URL_LOCAL}/cancel`
     }
     const session= await Stripe.checkout.sessions.create(perams)
+     const products = list_items.map((item) => {
+      return {
+        product_id: item.product_id._id,
+        name: item.product_id.name,
+        image: item.product_id.image,
+        quantity: item.quantity,
+      };
+    });
+    const order = await orderModel.insertOne({
+      userId,
+      orderId: `ord-${new mongoose.Types.ObjectId()}`,
+      products,
+      payment_status: "Pending",
+      delivery_address: address_id,
+      total_amount: totalAmt,
+      sub_total_amount,
+    });
+    await userModel.findOneAndUpdate(
+      { _id: userId },
+      {
+        $set: { shopping_cart: [] },
+        $push: { order_history: order._id },
+      }
+    );
+    await cartModel.deleteMany({ user_id: userId });
     return res.status(200).send({
       message:"pending",
       data:session,
