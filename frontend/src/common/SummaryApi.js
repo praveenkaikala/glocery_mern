@@ -1,7 +1,7 @@
 
 
 
-export const baseApiUrl="http://localhost:5000"
+export const baseApiUrl="https://grocery-mern-eua3.onrender.com"
 
 export const summaryApi={
     register:{
