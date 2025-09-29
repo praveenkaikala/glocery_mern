@@ -79,8 +79,8 @@ export const onlinePaymentController=async(req,res)=>{
         userId:userId,
         addressid:address_id
       },
-      success_url:`${process.env.FRONTEND_URL_LOCAL}/success`,
-      cancel_url:`${process.env.FRONTEND_URL_LOCAL}/cancel`
+      success_url:`${process.env.FRONTEND_URL_GLOBAL}/success`,
+      cancel_url:`${process.env.FRONTEND_URL_GLOBAL}/cancel`
     }
     const session= await Stripe.checkout.sessions.create(perams)
      const products = list_items.map((item) => {
