@@ -9,6 +9,7 @@ import { handleAddItemCart } from '../store/cartSlice';
 import { MdWifiCalling } from 'react-icons/md';
 import { pricewithDiscount } from '../utils/priceWithDiscount';
 import { setAddress } from '../store/addressSlice';
+import { setOrders } from '../store/orderSlice';
 const contextProvider=createContext(null);
 
 export const useGlobalContext=()=>useContext(contextProvider)
@@ -103,8 +104,24 @@ const updateCartItem = async(id,qty)=>{
       },0)
       setNotDiscountTotalPrice(notDiscountPrice)
   },[cart])
+   const fetchOrder = async()=>{
+      try {
+        console.log("calling orders")
+        const response = await AxiosPravite({
+          ...summaryApi.getOrders,
+        })
+        const { data : responseData } = response
+        console.log(responseData)
+        if(responseData.success){
+            dispatch(setOrders(responseData.data))
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
   useEffect(()=>{
     fetchCartItem()
+    fetchOrder()
   },[user])
   useEffect(()=>{
     fetchAddress()
@@ -117,7 +134,8 @@ const updateCartItem = async(id,qty)=>{
     fetchAddress,
     totalPrice,
     totalQty,
-    notDiscountTotalPrice
+    notDiscountTotalPrice,
+    fetchOrder
    }}>
    {children}
    </contextProvider.Provider>

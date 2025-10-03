@@ -148,5 +148,9 @@ export const summaryApi={
     onlinePayment:{
         url : '/api/user/order/online',
         method : 'post'
+    },
+    getOrders:{
+         url : '/api/user/order/get',
+        method : 'get'
     }
 }
