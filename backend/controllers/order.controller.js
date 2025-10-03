@@ -123,3 +123,34 @@ export const onlinePaymentController=async(req,res)=>{
     }); 
   }
 }
+
+
+export const getOrders=async(req,res)=>{
+  try {
+    const userId=req.userId;
+    const user=await userModel.findById(userId);
+    if(user.role=='Admin')
+    {
+      const orders=await orderModel.find();
+       return res.status(200).send({
+      message:"order list",
+      data:orders,
+      success:true,
+      error:false
+    })
+    }
+    const orders=await orderModel.find({userId})
+     return res.status(200).send({
+      message:"order list",
+      data:orders,
+      success:true,
+      error:false
+    })
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    }); 
+  }
+}
